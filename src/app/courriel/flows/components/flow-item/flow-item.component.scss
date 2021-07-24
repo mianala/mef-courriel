@@ -1,0 +1,130 @@
+@import "~src/_variables";
+@import "~src/styles/global.classes";
+
+:host {
+  border-bottom: 1px solid aliceblue;
+  padding: 0.5rem;
+
+  display: flex;
+  gap: 0.5rem;
+  // flex-wrap: wrap;
+  .headers {
+    .reference {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 7rem;
+    }
+    .numero {
+    }
+    .sender {
+      font-weight: bold;
+      // border-bottom: 1px dashed $accent;
+    }
+  }
+
+  .content {
+    flex: 1 1 auto;
+    flex-direction: column;
+
+    min-width: 0;
+
+    color: inherit; /* blue colors for links too */
+    text-decoration: inherit; /* no underline */
+    .title {
+      outline: 0;
+      font-weight: bold;
+
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      &:after {
+        content: "";
+        position: absolute;
+        left: 0;
+        display: inline-block;
+        height: 1em;
+        width: 100%;
+        border-bottom: 1px solid;
+        margin-top: 10px;
+        opacity: 0;
+        -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+        transition: opacity 0.35s, transform 0.35s;
+        -webkit-transform: scale(0, 1);
+        transform: scale(0, 1);
+      }
+
+      &:hover {
+        :after {
+          opacity: 1;
+          -webkit-transform: scale(1);
+          transform: scale(1);
+        }
+      }
+    }
+    .observation {
+      font-weight: 300;
+
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  .content,
+  .info,
+  .actions {
+    display: flex;
+    justify-content: center;
+  }
+
+  .info {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    min-width: fit-content;
+
+    .date {
+      flex-basis: content;
+
+      transition: visibility 0s, opacity 0.5s linear;
+
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  .actions {
+    z-index: 10;
+    background-color: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: absolute;
+    padding-right: 1rem;
+    right: 1.5rem;
+
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0s, opacity 0.3s ease-out;
+  }
+
+  &:hover {
+    // box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%),
+    // 0 1px 5px 0 rgb(0 0 0 / 12%);
+
+    padding-right: 13.5rem;
+
+    .actions {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .info {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+}

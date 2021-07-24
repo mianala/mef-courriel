@@ -1,0 +1,45 @@
+<header *ngIf="entity$ | async as entity">
+  <div class="about">
+    <h1>{{ entity.short }}</h1>
+    <h3>{{ entity.short_header }}</h3>
+    <h2>{{ entity.long }}</h2>
+    <div class="actions">
+      <button
+        mat-button
+        [color]="labelsToggle ? 'warn' : ''"
+        (click)="labelsToggle = !labelsToggle"
+      >
+        <mat-icon>label_outline</mat-icon> Labels
+      </button>
+      <button
+        mat-button
+        [color]="observationsToggle ? 'warn' : ''"
+        (click)="observationsToggle = !observationsToggle"
+      >
+        <mat-icon>add_task</mat-icon> Observations
+      </button>
+      <button
+        mat-button
+        [color]="letterTextsToggle ? 'warn' : ''"
+        (click)="letterTextsToggle = !letterTextsToggle"
+      >
+        <mat-icon>description</mat-icon> Documents
+      </button>
+      <a
+        mat-button
+        routerLink="/courriel/entities/edit"
+        [queryParams]="{ entity_id: entity.id }"
+        ><mat-icon>edit</mat-icon> Modifier</a
+      >
+    </div>
+  </div>
+  <div>
+    <labels [removeEntityLabels]="true" *ngIf="labelsToggle"></labels>
+    <observations *ngIf="observationsToggle"></observations>
+    <app-letter-texts *ngIf="letterTextsToggle"></app-letter-texts>
+  </div>
+</header>
+
+<div class="users">
+  <user *ngFor="let user of entityUsers$ | async" [user]="user"></user>
+</div>

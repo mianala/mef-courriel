@@ -1,0 +1,32 @@
+<header class="header" fxLayoutAlign="space-between center">
+  <div
+    class="header__logo"
+    fxLayoutAlign="center center"
+    style="cursor: pointer; outline: none"
+    routerLink="/"
+  >
+    <img class="header__img" style="width: 4rem" src="/assets/flag.png" />
+    <h1 class="header__title" style="margin: 0" fxLayoutAlign="center center">
+      RECHERCHE <span class="header__light">MEF</span>
+    </h1>
+  </div>
+
+  <div class="header__menu">
+    <nav id="navbar" class="header__nav collapse">
+      <ul>
+        <li *ngIf="!(userService.loggedIn$ | async)">
+          <a [routerLink]="Link.AUTH_LOGIN" mat-raised-button>Se connecter →</a>
+        </li>
+        <li *ngIf="userService.loggedIn$ | async">
+          <a
+            [routerLink]="Link.APPS_ROOT"
+            style="margin-left: 1rem"
+            mat-icon-button
+          >
+            <mat-icon>apps</mat-icon>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>

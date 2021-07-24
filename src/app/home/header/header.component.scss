@@ -1,0 +1,47 @@
+
+
+:host {
+  margin: 0;
+  padding: 0;
+  font-family: "Lato", sans-serif;
+  color: #1f4568;
+
+  margin: 0;
+  padding: 0;
+  font-family: "Lato", sans-serif;
+  color: #1f4568;
+  background-image: url("https://image.ibb.co/de6JzG/bitmap_1_1.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.btn--revert {
+  background-color: transparent;
+  color: #8198ae;
+  box-shadow: none;
+  border: 1px solid #c9d9e9;
+  &:hover {
+    background-color: transparent;
+    color: #1f4568;
+    box-shadow: none;
+    border: 1px solid #8198ae;
+  }
+}
+
+
+header {
+  padding: 30px 25px;
+
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    li {
+      display: inline-block;
+    }
+  }
+}
+
+.header__light {
+  color: #8198ae;
+}

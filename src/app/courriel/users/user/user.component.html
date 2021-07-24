@@ -1,0 +1,58 @@
+<mat-card>
+  <mat-card-header fxLayoutAlign="center">
+    <div
+      mat-card-avatar
+      class="avatar"
+      style="background-size: cover"
+      [style.background-image]="'url(/assets/app-images/user.png)'"
+    ></div>
+    <mat-card-title>
+      {{ user.firstname }}
+      {{ user.lastname }}
+    </mat-card-title>
+    <mat-card-subtitle
+      >{{ user.title }} -
+      <span class="short-header">{{ user.entity.short_header }}</span> -
+      <span class="role-title">{{ user.roleTitle() }}</span>
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <!-- <mat-card-content></mat-card-content> -->
+
+  <mat-card-actions fxLayoutAlign="center">
+    <!-- mail -->
+    <button mat-icon-button color="primary">
+      <mat-icon>mail_outline</mat-icon>
+    </button>
+
+    <!-- chat -->
+    <button mat-icon-button color="primary">
+      <mat-icon>chat_bubble_outlined</mat-icon>
+    </button>
+
+    <!-- verify user -->
+    <button mat-icon-button *ngIf="!user.verified" (click)="user.verify()">
+      <mat-icon class="green">how_to_reg</mat-icon>
+    </button>
+
+    <!-- activate user -->
+    <button mat-icon-button *ngIf="!user.active" (click)="user.activate()">
+      <mat-icon class="green">arrow_circle_up</mat-icon>
+    </button>
+
+    <!-- update role -->
+    <button mat-icon-button *ngIf="user.active" (click)="user.updateRole()">
+      <mat-icon color="accent">admin_panel_settings</mat-icon>
+    </button>
+
+    <!-- desactivate -->
+    <button mat-icon-button *ngIf="user.active" (click)="user.desactivate()">
+      <mat-icon color="warn">remove_circle</mat-icon>
+    </button>
+
+    <!-- transfer -->
+    <button mat-icon-button (click)="transfer()">
+      <mat-icon color="accent">change_circle</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>

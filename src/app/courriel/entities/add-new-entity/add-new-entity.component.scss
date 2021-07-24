@@ -1,0 +1,6 @@
+@import "~src/styles/box";
+form {
+  display: flex;
+  width: clamp(300px, 60vw, 800px);
+  flex-direction: column;
+}

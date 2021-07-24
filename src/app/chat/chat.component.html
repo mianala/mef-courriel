@@ -1,0 +1,143 @@
+<div class="sidebar mat-typography">
+  <h1 class="display-1">Messages</h1>
+  <div
+    class="chat-info"
+    fxLayout="column"
+    fxLayoutGap=".2rem"
+    fxLayoutAlign="center center"
+  >
+    <div
+      class="info-avatar"
+      style="background-size: cover"
+      [style.background-image]="
+        'url(https://randomuser.me/api/portraits/women/9.jpg'
+      "
+    ></div>
+    <div class="name mat-h2">Ashley Amelia</div>
+    <div class="title">Chief Executive</div>
+    <div class="entity mat-caption">CIFAG</div>
+  </div>
+  <div class="search">
+    <mat-form-field appearance="outline">
+      <mat-label>Utilisateurs</mat-label>
+      <input name="message" matInput [(ngModel)]="message" />
+      <button
+        mat-button
+        matSuffix
+        mat-icon-button
+        aria-label="send"
+        (click)="message = ''"
+      >
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+  <div class="users">
+    <div class="user" fxLayoutAlign="space-between center">
+      <div
+        class="avatar"
+        style="background-size: cover"
+        [style.background-image]="
+          'url(https://randomuser.me/api/portraits/women/90.jpg'
+        "
+      ></div>
+      <div class="name">
+        <div class="">Ashley Amelia</div>
+        <div class="mat-caption">CIFAG</div>
+      </div>
+      <mat-icon matBadge="8" matBadgeColor="warn">chat_bubble_outline</mat-icon>
+    </div>
+    <div class="user active" fxLayoutAlign="space-between center">
+      <div
+        class="avatar"
+        style="background-size: cover"
+        [style.background-image]="
+          'url(https://randomuser.me/api/portraits/women/78.jpg'
+        "
+      ></div>
+      <div class="name">
+        <div>Ashley Amelia</div>
+        <div class="mat-caption">CIFAG</div>
+      </div>
+      <mat-icon matBadge="8" matBadgeColor="warn">chat_bubble_outline</mat-icon>
+    </div>
+  </div>
+</div>
+<div class="conversation">
+  <div class="header">
+    <button mat-icon-button class="back-button">
+      <mat-icon class="mat-18">arrow_back</mat-icon>
+    </button>
+    <div
+      class="avatar"
+      style="background-size: cover"
+      [style.background-image]="
+        'url(https://randomuser.me/api/portraits/women/78.jpg'
+      "
+    ></div>
+    <div class="user-info" fxFlex fxLayout="column">
+      <div class="name">Ashley Amelia</div>
+      <div class="entity mat-caption" fxFlex fxLayoutGap="1rem">
+        <span class="user-entity">CIFAG</span>
+        <span class="user-title">Développeur</span>
+      </div>
+    </div>
+    <button class="info" mat-icon-button>
+      <mat-icon> info_outline</mat-icon>
+    </button>
+  </div>
+  <div class="messages">
+    <div class="message-container sent">
+      <div class="message">
+        <div
+          class="avatar"
+          style="background-size: cover"
+          [style.background-image]="
+            'url(https://randomuser.me/api/portraits/women/90.jpg'
+          "
+        ></div>
+        <div class="content mat-elevation-z2">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat
+          tenetur, modi neque est harum expedita cupiditate earum amet corporis
+          quis non consectetur facilis nobis! Hic quam unde molestias obcaecati
+          magni?
+        </div>
+      </div>
+      <div class="time mat-caption">12:45</div>
+    </div>
+    <div class="message-container received">
+      <div class="message">
+        <div
+          class="avatar"
+          style="background-size: cover"
+          [style.background-image]="
+            'url(https://randomuser.me/api/portraits/women/90.jpg'
+          "
+        ></div>
+        <div class="content mat-elevation-z2">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat
+          tenetur, modi neque est harum expedita cupiditate earum amet corporis
+          quis non consectetur facilis nobis! Hic quam unde molestias obcaecati
+          magni?
+        </div>
+      </div>
+      <div class="time mat-caption">12:45</div>
+    </div>
+  </div>
+  <div class="write-message" fxFlex>
+    <mat-form-field appearance="outline">
+      <mat-label>Message</mat-label>
+      <input name="message" matInput [(ngModel)]="message" />
+      <button
+        mat-button
+        matSuffix
+        mat-icon-button
+        aria-label="send"
+        (click)="message = ''"
+      >
+        <mat-icon>send</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+  <!-- files in the future -->
+</div>

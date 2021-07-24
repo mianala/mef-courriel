@@ -1,0 +1,35 @@
+<app-header></app-header>
+<section>
+  <div class="site">
+    <h2 class="site__subtitle">
+      L'outil de communication au sein du Ministère de l'Économie et des
+      Finances. Un pas vers la dématérialisation.
+    </h2>
+    <div class="site__box-link" [hidden]="userService.loggedIn$ | async">
+      <a [routerLink]="Link.AUTH_SIGNUP" mat-raised-button color="primary"
+        >S'inscrire</a
+      >
+      <a
+        style="margin-left: 1rem"
+        mat-raised-button
+        [routerLink]="Link.AUTH_LOGIN"
+        >Se connecter</a
+      >
+    </div>
+    <div
+      class="site__box-link"
+      *ngIf="userService.loggedIn$ | async"
+      fxLayoutAlign="center center"
+    >
+      <a
+        style="margin-left: 1rem"
+        [routerLink]="Link.SEARCH_APP"
+        mat-raised-button
+        color="primary"
+      >
+        <mat-icon>search</mat-icon> RECHERCHER</a
+      >
+    </div>
+    <img class="site__img" src="https://image.ibb.co/c7grYb/image3015.png" />
+  </div>
+</section>

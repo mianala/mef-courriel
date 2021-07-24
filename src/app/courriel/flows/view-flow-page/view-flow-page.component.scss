@@ -1,0 +1,56 @@
+@import "~src/_variables";
+
+:host {
+  display: flex;
+  flex-direction: column;
+  main {
+    padding: 1rem;
+    background-color: $grey;
+
+    .header-actions {
+      display: flex;
+      color: #666;
+    }
+
+    .flow,
+    article {
+      h1 {
+        margin-bottom: 1rem;
+      }
+    }
+  }
+}
+
+// files
+
+.files {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  .file {
+    padding: 0.3rem;
+    background-color: white;
+    border-radius: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    .file-name {
+      cursor: pointer;
+    }
+    img {
+      width: 2rem;
+      height: auto;
+    }
+
+    transition: all ease-out 0.2s;
+
+    &:hover {
+      box-shadow: 0 2px 12px 0 rgb(0 0 0 / 20%);
+    }
+
+    .mat-icon {
+      color: $primary;
+    }
+  }
+}

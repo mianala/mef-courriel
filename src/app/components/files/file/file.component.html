@@ -1,0 +1,12 @@
+<img [src]="file?.iconUrl()" alt="" />
+<span [title]="Strings.open" class="file-name">{{ file?.name }}</span>
+
+<button
+  (click)="remove()"
+  type="button"
+  mat-icon-button
+  style="font-size: 13px"
+  color="warn"
+>
+  <mat-icon>remove</mat-icon>
+</button>

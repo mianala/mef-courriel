@@ -1,0 +1,56 @@
+@import "~src/_variables";
+/*Reset*/
+/* colors 8a3aff, 6f79ff, 3a9fff black-> 1f4568  grey->8198ae*/
+/*menu header*/
+
+:host {
+  margin: 0;
+  padding: 0;
+  font-family: "Lato", sans-serif;
+  color: #1f4568;
+
+  margin: 0;
+  padding: 0;
+  font-family: "Lato", sans-serif;
+  color: #1f4568;
+  background-image: url("https://image.ibb.co/de6JzG/bitmap_1_1.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+section {
+  padding: 90px 0;
+  position: relative;
+}
+
+.site {
+  text-align: center;
+  h1 {
+    font-size: 30px;
+    margin: 0;
+  }
+  h2 {
+    font-size: 22px;
+    color: #8198ae;
+    margin: 15px 0 40px 0;
+    text-align: center;
+  }
+  img {
+    margin-top: 50px;
+    display: inline-block;
+    width: 77%;
+  }
+}
+
+h1 {
+  font-size: 18px;
+  margin: 0;
+  margin-left: 10px;
+  display: inline-block;
+  line-height: 18px;
+  vertical-align: middle;
+}
+.header__light {
+  color: #8198ae;
+}

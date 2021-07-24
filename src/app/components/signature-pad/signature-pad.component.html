@@ -1,0 +1,19 @@
+<div class="actions">
+  <button
+    color="primary"
+    mat-icon-button
+    *ngIf="!signaturePad?.isEmpty()"
+    (click)="print()"
+  >
+    <mat-icon> check</mat-icon>
+  </button>
+  <button *ngIf="!signaturePad?.isEmpty()" mat-icon-button (click)="clear()">
+    <mat-icon>refresh</mat-icon>
+  </button>
+</div>
+<canvas
+  [height]="canvasHeight"
+  [width]="canvasWidth"
+  id="canvas"
+  #canvas
+></canvas>

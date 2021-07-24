@@ -1,0 +1,57 @@
+<main *ngIf="flow$ | async as flow; else loading">
+  <div class="header-actions">
+    <span class="start">
+      <back></back>
+    </span>
+
+    <span class="end" *ngIf="app_page">
+      <button mat-icon-button><mat-icon>send</mat-icon></button>
+      <button mat-icon-button><mat-icon>info_outline</mat-icon></button>
+      <button mat-icon-button><mat-icon>alt_route</mat-icon></button>
+      <button mat-icon-button><mat-icon>person_add</mat-icon></button>
+      <button mat-icon-button><mat-icon>reply</mat-icon></button>
+      <button mat-icon-button><mat-icon>edit</mat-icon></button>
+      <button mat-icon-button (click)="flow.delete()">
+        <mat-icon color="warn">delete</mat-icon>
+      </button>
+    </span>
+  </div>
+  <section class="flow">
+    <div class="mat-caption" style="color: #444; margin-bottom: 1em">
+      <b class="flow-header-entity">{{ flow.sender() }}</b> à
+      <b class="flow-header-entity">{{ flow.receiver() }}</b>
+      (Réf: {{ flow.r.reference() }})
+    </div>
+  </section>
+  <article>
+    <h1 class="mat-display-1">
+      {{ flow.r.title() }}
+    </h1>
+  </article>
+
+  <div aria-label="File list" class="files">
+    <div *ngFor="let file of flow.files" class="file">
+      <img [src]="file.iconUrl()" alt="" />
+      <span
+        [title]="Strings.open"
+        (click)="activeFile = file"
+        class="file-name"
+        >{{ file.name }}</span
+      >
+      <a
+        mat-icon-button
+        [title]="Strings.download"
+        target="_blank"
+        [href]="file.url()"
+        ><mat-icon>downloading</mat-icon></a
+      >
+    </div>
+  </div>
+  <!-- <flow-list></flow-list> -->
+</main>
+
+<viewer *ngIf="activeFile" [file]="activeFile"></viewer>
+
+<ng-template #loading>
+  <flow-loading></flow-loading>
+</ng-template>

@@ -1,0 +1,64 @@
+<section class="actions">
+  <button mat-raised-button color="primary" [routerLink]="Link.FLOW_SAVE">
+    <mat-icon> description </mat-icon>
+    Enregistrer
+  </button>
+  <a mat-button color="primary" [routerLink]="Link.SEARCH_APP">
+    <mat-icon> search </mat-icon>
+    Rechercher
+  </a>
+</section>
+
+<nav mat-tab-nav-bar>
+  <a
+    mat-tab-link
+    *ngFor="let tab of tabs"
+    [routerLink]="Link.FLOWS_INBOX"
+    [queryParams]="{ tab: tab.tab }"
+    [active]="activeTab == tab.tab"
+    ><mat-icon [matBadge]="tab.unread | async" matBadgeColor="accent">{{
+      tab.icon
+    }}</mat-icon>
+    <span style="margin-left: 1rem"> {{ tab.title }}</span></a
+  >
+</nav>
+
+<section *ngIf="flows$ | async as flows; else loading">
+  <div
+    class="empty"
+    *ngIf="!flows.length"
+    style="max-width: 100vw; max-height: 80vh; margin: auto"
+  >
+    <img
+      style="max-height: 85vh"
+      src="/assets/app-images/empty-animate.svg"
+      alt=""
+    />
+  </div>
+
+  <div *ngIf="flows.length" class="flow-list">
+    <flow
+      class="mat-typography"
+      layout="inbox"
+      *ngFor="let flow of flows"
+      [flow]="flow"
+    ></flow>
+  </div>
+
+  <!-- FIXME: -->
+  <mat-paginator
+    *ngIf="flows.length"
+    [hidePageSize]="true"
+    [length]="pageLength"
+    [pageSize]="pageSize"
+    [pageIndex]="(queryParams$ | async)?.page"
+    (page)="pageEvent($event)"
+    [showFirstLastButtons]="true"
+  >
+  </mat-paginator>
+</section>
+<ng-template #loading>
+  <flows-loading></flows-loading>
+</ng-template>
+
+<router-outlet></router-outlet>

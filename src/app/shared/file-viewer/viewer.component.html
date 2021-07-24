@@ -1,0 +1,36 @@
+<ng-container [ngSwitch]="file.viewer()">
+  <div *ngSwitchCase="'image'">
+    <img #img [src]="file.url()" alt="" />
+  </div>
+  <div *ngSwitchCase="'audio'">
+    <audio #audio controls>
+      <source [src]="file.url()" [type]="file.type" />
+      Votre navigateur ne supporte pas l'élément audio.
+    </audio>
+  </div>
+  <div #video *ngSwitchCase="'video'">
+    <video width="100%" controls>
+      <source [src]="file.url()" [type]="file.type" />
+      Votre navigateur ne supporte pas l'élément video.
+    </video>
+  </div>
+  <div #video *ngSwitchCase="'pdf'">
+    <!-- TODO: https://github.com/VadimDez/ng2-pdf-viewer#on-progress -->
+    <pdf-viewer
+      [src]="file.url()"
+      [render-text]="true"
+      [fit-to-page]="true"
+      [original-size]="false"
+      [autoresize]="true"
+      [show-all]="true"
+    ></pdf-viewer>
+  </div>
+  <div *ngSwitchCase="'ngx-doc-viewer'">
+    <ngx-doc-viewer
+      #doc
+      [url]="file.url()"
+      viewer="google"
+      style="width: 100%; height: clamp(800px, 90vh, 2048px)"
+    ></ngx-doc-viewer>
+  </div>
+</ng-container>

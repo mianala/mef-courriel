@@ -1,0 +1,121 @@
+<div class="labels">
+  <button
+    mat-icon-button
+    [ngSwitch]="flow.important"
+    (click)="flow.toggleImportant()"
+    title="Important"
+  >
+    <ng-container *ngSwitchCase="false">
+      <mat-icon color="primary" class="mat-18"
+        >label_important_outline</mat-icon
+      >
+    </ng-container>
+    <ng-container *ngSwitchCase="true">
+      <mat-icon color="primary" class="mat-18">label_important</mat-icon>
+    </ng-container>
+  </button>
+</div>
+<div class="headers" [ngSwitch]="layout">
+  <!-- inbox -->
+  <ng-container *ngSwitchCase="'inbox'">
+    <span class="sender" [title]="flow.senderLong()">
+      {{ flow.sender() }}
+    </span>
+    <div class="reference" [title]="flow.reference">
+      <span class="numero">
+        {{ flow.numero }}
+      </span>
+    </div>
+  </ng-container>
+
+  <!-- sent -->
+  <ng-container *ngSwitchCase="'sent'">
+    <span class="receiver">
+      <span class="to"> À: </span> {{ flow.receiver() }}
+    </span>
+  </ng-container>
+
+  <!-- default-->
+  <ng-container *ngSwitchDefault>
+    <span class="numero">
+      {{ flow.numero }}
+    </span>
+    <span class="sender">
+      {{ flow.sender() }}
+    </span>
+    <div class="reference">{{ flow.reference }}</div>
+  </ng-container>
+</div>
+<a
+  class="content"
+  [routerLink]="Link.FLOW_PAGE"
+  [queryParams]="{ flow_id: flow.id }"
+>
+  <div class="title" [title]="flow.r.title()">
+    {{ flow.r.title() }}
+  </div>
+  <div class="observation" [title]="flow.content">
+    {{ flow.content }}
+  </div>
+</a>
+<div class="info">
+  <mat-icon color="warn" title="Urgent!" *ngIf="flow.is.urgent()"
+    >error_outline</mat-icon
+  ><span class="date">
+    {{ flow.shortTime() }}
+  </span>
+</div>
+<div class="actions">
+  <a
+    mat-icon-button
+    title="Ouvrir"
+    [routerLink]="Link.FLOW_PAGE"
+    [queryParams]="{ flow_id: flow.id }"
+  >
+    <mat-icon class="mat-18">folder_open</mat-icon>
+  </a>
+  <a
+    class="green"
+    mat-icon-button
+    [ngSwitch]="flow.read"
+    (click)="flow.toggleRead()"
+  >
+    <ng-container *ngSwitchCase="false">
+      <mat-icon title="Marqué Lu" class="green" class="mat-18"
+        >mark_email_read</mat-icon
+      >
+    </ng-container>
+
+    <ng-container *ngSwitchCase="true">
+      <mat-icon title="Marqué Non Lu" class="mat-18">mark_as_unread</mat-icon>
+    </ng-container>
+  </a>
+  <a
+    mat-icon-button
+    [routerLink]="Link.FLOW_ASSIGN"
+    [queryParams]="{ flow_id: flow.id }"
+  >
+    <mat-icon class="mat-18">reply</mat-icon>
+  </a>
+  <a
+    mat-icon-button
+    [routerLink]="Link.FLOW_ASSIGN"
+    [queryParams]="{ flow_id: flow.id }"
+  >
+    <mat-icon class="mat-18">person_add_alt</mat-icon>
+  </a>
+  <a
+    mat-icon-button
+    [routerLink]="Link.FLOW_ROUTE"
+    [queryParams]="{ flow_id: flow.id }"
+  >
+    <mat-icon class="mat-18">alt_route</mat-icon>
+  </a>
+  <a
+    mat-icon-button
+    [routerLink]="Link.FLOW_SEND"
+    [queryParams]="{ flow_id: flow.id }"
+  >
+    <mat-icon color="primary" class="mat-18">send</mat-icon>
+  </a>
+</div>
