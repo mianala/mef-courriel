@@ -98,6 +98,7 @@ import { SignaturePadComponent } from './components/signature-pad/signature-pad.
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SignComponent } from './courriel/flows/sign/sign.component';
 import { StampComponent } from './components/stamp/stamp.component';
+import { EditFlowComponent } from './courriel/flows/edit-flow/edit-flow.component';
 
 registerLocaleData(localeFr);
 
@@ -210,6 +211,7 @@ registerLocaleData(localeFr);
     SignaturePadComponent,
     SignComponent,
     StampComponent,
+    EditFlowComponent,
   ],
   imports: [
     BrowserModule,

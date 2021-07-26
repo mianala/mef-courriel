@@ -10,6 +10,7 @@
       class="nav-link"
       [routerLink]="Link.USERS"
       routerLinkActive="active"
+      matTooltip="Verified and Active Users"
       [routerLinkActiveOptions]="{ exact: true }"
     >
       <div matTooltipPosition="right">
@@ -21,6 +22,7 @@
       class="nav-link"
       [routerLink]="Link.USERS_UNVERIFIED"
       routerLinkActive="active"
+      matTooltip="Unverified Users"
     >
       <div>
         <mat-icon>how_to_reg</mat-icon>
@@ -31,6 +33,7 @@
       class="nav-link"
       [routerLink]="Link.USERS_INACTIVE"
       routerLinkActive="active"
+      matTooltip="Inactive Users"
     >
       <div>
         <mat-icon>person_off</mat-icon>
@@ -52,6 +55,7 @@
       class="nav-link"
       [routerLink]="Link.ENTITIES_ADD"
       routerLinkActive="active"
+      matTooltip="Add Entity"
     >
       <div>
         <mat-icon>playlist_add</mat-icon>
@@ -61,6 +65,7 @@
       class="nav-link"
       [routerLink]="Link.ENTITIES_INACTIVE"
       routerLinkActive="active"
+      matTooltip="Inactive Entity"
     >
       <div>
         <mat-icon>domain_disabled</mat-icon>

@@ -40,6 +40,7 @@ import { InactiveUsersComponent } from '../admin/users/inactive-users/inactive-u
 import { InactiveEntitiesComponent } from '../admin/entities/inactive-entities/inactive-entities.component';
 import { AssignedFlowsComponent } from '../courriel/flows/assigned-flows/assigned-flows.component';
 import { SignComponent } from '../courriel/flows/sign/sign.component';
+import { EditFlowComponent } from '../courriel/flows/edit-flow/edit-flow.component';
 
 const routes: Routes = [
   {
@@ -211,6 +212,10 @@ const routes: Routes = [
           {
             path: 'save',
             component: SaveFlowPageComponent,
+          },
+          {
+            path: 'edit',
+            component: EditFlowComponent,
           },
           {
             path: 'assign',

@@ -10,7 +10,13 @@
       <button mat-icon-button><mat-icon>alt_route</mat-icon></button>
       <button mat-icon-button><mat-icon>person_add</mat-icon></button>
       <button mat-icon-button><mat-icon>reply</mat-icon></button>
-      <button mat-icon-button><mat-icon>edit</mat-icon></button>
+      <button
+        mat-icon-button
+        [routerLink]="Link.FLOW_EDIT"
+        [queryParams]="{ flow_id: flow.id }"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
       <button mat-icon-button (click)="flow.delete()">
         <mat-icon color="warn">delete</mat-icon>
       </button>

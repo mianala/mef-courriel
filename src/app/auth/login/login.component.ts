@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
 
     this.loading = true;
 
-    this.userService.logIn(variables, () => {
+    this.userService.loginUserQuery(variables, () => {
       this.loading = false;
     });
   }

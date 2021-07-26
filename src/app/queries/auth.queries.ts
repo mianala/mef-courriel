@@ -11,6 +11,8 @@ const AuthQueries = {
         ...CoreUserFields
         email
         rights
+        active
+        verified
         phone
         settings_default_app
         settings_default_letter_text

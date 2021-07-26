@@ -11,14 +11,14 @@ import UserQueries from '../queries/user.queries';
 
 class UserWithActions extends User {
   desactivate() {
-    if (!confirm('Do you want to desactivate this user?')) {
+    if (!confirm('Confirm to desactivate this user?')) {
       return;
     }
     UserService.getInstance().desactivateUser(this.id);
   }
 
   activate() {
-    if (!confirm('Please confirm if you want to activate this user?')) {
+    if (!confirm('Confirm to activate this user?')) {
       return;
     }
     UserService.getInstance().activateUser(this.id);
@@ -258,7 +258,7 @@ export class UserService {
       .valueChanges.pipe(UserWithActions.mapUsers);
   }
 
-  logIn(variables: { username: any; hashed: any }, next: () => void) {
+  loginUserQuery(variables: { username: any; hashed: any }, next: () => void) {
     this.apollo
       .query({
         query: AuthQueries.LOGIN,

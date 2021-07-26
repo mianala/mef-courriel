@@ -7,6 +7,7 @@ import { Location } from '@angular/common';
 import { map, switchMap } from 'rxjs/operators';
 import { NotificationService } from 'src/app/services/notification.service';
 import { Strings } from 'src/app/classes/strings';
+import { Link } from 'src/app/classes/link';
 
 @Component({
   selector: 'flow-page',
@@ -19,6 +20,7 @@ export class ViewFlowPageComponent implements OnInit {
   app_page = false;
   loading = true;
   Strings = Strings;
+  Link = Link;
 
   flow$ = this.route.queryParams.pipe(
     switchMap((routeData) => {
