@@ -137,7 +137,7 @@ export class EditFlowComponent implements OnInit {
       content: form.content,
       note: form.note,
       reference: form.reference,
-      labels: form.labels.join(','),
+      labels: form.labels?.join(','),
       user_id: this.user?.id,
       date: form.date,
       urgent: form.urgent,

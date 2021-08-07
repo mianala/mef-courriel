@@ -117,7 +117,7 @@
     <file-upload-button></file-upload-button>
 
     <button
-      [disabled]="!editFlowForm.valid && !editFlowForm.touched"
+      [disabled]="!editFlowForm.valid && !editFlowForm.pristine"
       (click)="submit()"
       *ngIf="!loading"
       mat-raised-button
