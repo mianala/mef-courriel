@@ -138,6 +138,13 @@ export class FileService {
     });
   }
 
+  insertFiles(files: any) {
+    return this.apollo.mutate({
+      mutation: FileQueries.ADD,
+      variables: { objects: files },
+    });
+  }
+
   static instance: FileService;
 
   static getInstance() {

@@ -116,12 +116,14 @@ export class EditFlowComponent implements OnInit {
       src: string;
       destination: string;
       filename: string;
+      flow_id: number;
       lastModified: number;
     }[] = [];
 
     form.files?.forEach((file: any) => {
       form_files.push({
         name: file.name,
+        flow_id: this.flow_id,
         size: file.size,
         destination: file.destination,
         filename: file.filename,
@@ -153,15 +155,19 @@ export class EditFlowComponent implements OnInit {
       // },
     };
 
+    if (form_files.length) {
+      this.fileService.insertFiles(form_files).subscribe((data) => {
+        console.log(data);
+      });
+    }
+
     this.flowService
       .updateFlow(this.flow_id, flowVariables)
-      .subscribe(this.flowSaved.bind(this));
-  }
-
-  flowSaved(data: any) {
-    this.fileService.files$.next([]);
-    this.fileService.progress$.next(null);
-    this.notification.notify('Modifications Enregistré');
-    this.loading = false;
+      .subscribe((data: any) => {
+        this.fileService.files$.next([]);
+        this.fileService.progress$.next(null);
+        this.notification.notify('Modifications Enregistré');
+        this.loading = false;
+      });
   }
 }

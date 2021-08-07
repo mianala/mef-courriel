@@ -15,6 +15,20 @@ const FileQueries = {
       }
     }
   `,
+
+  ADD: gql`
+    mutation insert_file($objects: [file_insert_input!]!) {
+      insert_file(objects: $objects) {
+        affected_rows
+        returning {
+          id
+          flow_id
+          name
+          type
+        }
+      }
+    }
+  `,
 };
 
 export default FileQueries;
