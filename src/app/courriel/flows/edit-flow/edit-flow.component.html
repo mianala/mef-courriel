@@ -1,6 +1,6 @@
-<form [formGroup]="editFlowForm" class="box">
+<form *ngIf="flow$ | async" [formGroup]="editFlowForm" class="box">
   <div class="header">
-    <h1>Modifier Courriel</h1>
+    <h1>Modifier: {{ (flow$ | async)?.title }}</h1>
   </div>
   <div class="columns">
     <mat-form-field appearance="outline">
@@ -99,13 +99,25 @@
     >Urgent <mat-icon color="warn">error_outline</mat-icon></mat-checkbox
   >
   <labels formControlName="labels"></labels>
-
+  <div aria-label="File list" class="files">
+    <div *ngFor="let file of (flow$ | async)?.files" class="file">
+      <img [src]="file.iconUrl()" alt="" />
+      <span [title]="Strings.rename" class="file-name">{{ file.name }}</span>
+      <button
+        mat-icon-button
+        [title]="Strings.delete"
+        (click)="fileService.removeExistingFile(file)"
+      >
+        <mat-icon color="warn">delete</mat-icon>
+      </button>
+    </div>
+  </div>
   <files formControlName="files"></files>
   <div class="columns">
     <file-upload-button></file-upload-button>
 
     <button
-      [disabled]="!editFlowForm.valid"
+      [disabled]="!editFlowForm.valid && !editFlowForm.touched"
       (click)="submit()"
       *ngIf="!loading"
       mat-raised-button

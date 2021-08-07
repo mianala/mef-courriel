@@ -65,26 +65,35 @@ export class EntityAutocompleteComponent
   @Output() _keyup: EventEmitter<any> = new EventEmitter();
 
   constructor(private entityService: EntityService) {
-    this.entityCtrl.valueChanges.subscribe((value) =>
-      this.setValue(new Entity({ short: value }))
+    this.entityCtrl.valueChanges.subscribe(
+      (value) => (this.value = new Entity({ short: value }))
     );
+
+    this.entityCtrl.setValue('new value');
   }
 
-  setValue(entity: Entity) {
+  set value(entity: Entity) {
     this.entity = entity;
     this.onChange(entity);
     this.onTouched();
   }
 
   optionSelected(e: MatAutocompleteSelectedEvent) {
-    this.setValue(e.option.value);
+    this.value = e.option.value;
   }
 
-  onChange!: (entity: Entity) => void;
-  onTouched!: () => void;
+  onChange = (value: any) => {};
+  onTouched = () => {};
 
   writeValue(obj: Entity): void {
-    this.entity = obj;
+    console.log(obj);
+    if (!obj.id) {
+      console.log('patching');
+
+      return;
+    }
+
+    this.value = obj;
   }
   registerOnChange(fn: any): void {
     this.onChange = fn;
@@ -96,6 +105,6 @@ export class EntityAutocompleteComponent
   ngOnInit(): void {}
 
   select(e: Entity) {
-    this.setValue(new Entity(e));
+    this.value = new Entity(e);
   }
 }

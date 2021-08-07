@@ -14,6 +14,7 @@ export class Flow {
   // flow status
   status = 0;
   important = false;
+  urgent = false;
   read = false;
   action = 0;
 
@@ -70,10 +71,13 @@ export class Flow {
       return this.action == 3;
     },
     urgent: () => {
-      return this.status == 1;
+      return this.urgent && this.status;
     },
     read: () => {
       return this.status == 2;
+    },
+    treated: () => {
+      return this.status == 3;
     },
   };
 
@@ -176,6 +180,7 @@ export class Flow {
 
       # flow status
       progress
+      urgent
       important
       read
 
@@ -213,7 +218,7 @@ export class Flow {
   static ITEM_FLOW_FIELDS = gql`
     ${Entity.CORE_ENTITY_FIELDS}
     ${Flow.CORE_FLOW_FIELDS}
-    ${AppFile.core_file_fields}
+    ${AppFile.CORE_FILE_FIELDS}
 
     fragment ItemFlowFields on flow {
       ...CoreFlowFields

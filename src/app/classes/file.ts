@@ -20,19 +20,6 @@ export class AppFile {
     Object.assign(this, _file);
   }
 
-  static core_file_fields = gql`
-    fragment CoreFileFields on file {
-      id
-      name
-      size
-      type
-      src
-      lastModified
-      destination
-      filename
-    }
-  `;
-
   url() {
     if (!this.destination) return `${environment.file_server}/${this.filename}`;
     const path = this.destination.replace('uploads/', '');
@@ -105,4 +92,18 @@ export class AppFile {
     },
     { short: 'mp3', alt: 'mp3 file', icon: 'mp3.svg', viewer: 'audio' },
   ];
+
+  static CORE_FILE_FIELDS = gql`
+    fragment CoreFileFields on file {
+      id
+      flow_id
+      name
+      size
+      src
+      type
+      destination
+      filename
+      created_at
+    }
+  `;
 }

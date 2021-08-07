@@ -6,10 +6,13 @@ import {
   HttpResponse,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Apollo } from 'apollo-angular';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { AppFile } from '../classes/file';
+import FileQueries from '../queries/file.queries';
+import { NotificationService } from './notification.service';
 
 interface IUploadProgress {
   type: number;
@@ -38,7 +41,11 @@ export class FileService {
 
   private endpoint = environment.upload_endpoint;
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private apollo: Apollo,
+    private notification: NotificationService
+  ) {
     this.progress$.subscribe((p) => {
       if (!p) {
         this.progress = 0;
@@ -104,8 +111,31 @@ export class FileService {
     });
   }
 
+  removeExistingFile(file: AppFile) {
+    if (!file.id) return;
+    if (!confirm(`Supprimer Fichier ${file.name}?`)) return;
+
+    this.updateFile(file.id, { removed: true }).subscribe(
+      (data) => this.notification.notify(`Fichier ${file.name} supprimé`),
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
   remove(file: AppFile) {
     this.files$.next(this.files$.value.slice(this.files$.value.indexOf(file)));
+  }
+
+  updateFile(file_id: number, set: any = {}, inc: any = {}) {
+    return this.apollo.mutate({
+      mutation: FileQueries.UPDATE,
+      variables: {
+        file_id: file_id,
+        _set: set,
+        _inc: inc,
+      },
+    });
   }
 
   static instance: FileService;

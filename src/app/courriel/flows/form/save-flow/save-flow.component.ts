@@ -137,10 +137,6 @@ export class SaveFlowFormComponent implements OnInit {
     });
   }
 
-  _keypress() {
-    this.saveFlowForm.patchValue({ project_owner_id: 0 });
-  }
-
   reset() {
     this.saveFlowForm.reset();
     this.saveFlowForm.patchValue({

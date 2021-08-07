@@ -1,5 +1,7 @@
 export class Strings {
   static open = 'Ouvrir';
+  static delete = 'Supprimer';
+  static rename = 'Renomer';
   static download = 'Télécharger';
   static inboxTypes = {
     main: {
