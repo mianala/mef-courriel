@@ -2,7 +2,7 @@
   id="searchresultsarea"
   *ngIf="filteredResult$ | async as results; else loading"
 >
-  <empty-search-result [hidden]="results.length"></empty-search-result>
+  <empty-search-result *ngIf="!results.length"></empty-search-result>
   <div class="result-list" *ngIf="results.length">
     <result-item *ngFor="let item of results" [flow]="item"></result-item>
   </div>

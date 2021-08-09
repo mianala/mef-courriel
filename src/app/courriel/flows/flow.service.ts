@@ -319,13 +319,17 @@ export class FlowService {
     searchFlowVariables.owner_id = {
       _eq: this.userService._activeUser!.entity_id,
     };
+    searchFlowVariables.signature = {
+      _eq: true,
+    };
 
     return this.apollo
-      .query({
+      .watchQuery({
         query: FlowQueries.SEARCH_APP_QUERY,
         variables: { where: searchFlowVariables },
+        fetchPolicy: 'cache-and-network',
       })
-      .pipe(FlowWithActions.mapFlows);
+      .valueChanges.pipe(FlowWithActions.mapFlows);
   }
 
   static instance: FlowService;

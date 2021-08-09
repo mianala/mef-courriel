@@ -80,8 +80,6 @@ export class FlowsComponent implements OnInit {
     this.userService.activeUserEntityId$,
   ]).pipe(
     switchMap(([params, entity_id]) => {
-      console.log(params, entity_id);
-
       const page = parseInt(params.page) || 0;
       const items = parseInt(params.items) || this.pageSize;
       const offset = page * items;
