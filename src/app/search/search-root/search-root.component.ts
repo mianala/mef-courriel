@@ -33,7 +33,6 @@ export class SearchPageComponent implements OnInit {
       .pipe(filter((entity) => !!entity))
       .subscribe((entity: Entity | null) => {
         this.dataSource.data = entity!.children;
-        console.log(entity!.children);
       });
 
     this.userService.loggedIn$.subscribe((value) =>

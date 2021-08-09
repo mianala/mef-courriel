@@ -62,18 +62,14 @@ export class AssignFlowComponent implements OnInit {
     const form = this.sendFlowForm.value;
     const flows: any[] = [];
 
-    const userEntity = this.entityService.userEntity$.value;
-
-    console.log('activeUser', this.activeUser, 'activeEntity', userEntity);
-
-    if (!userEntity || !this.activeUser) return;
+    if (!this.activeUser) return;
 
     console.log(form);
 
     form.users.forEach((user: User) => {
       let flow = {
         user_id: this.activeUser!.id,
-        initiator_id: userEntity!.id,
+        initiator_id: this.activeUser?.entity_id!,
         action: 2,
         root_id: this.parentFlow.rootId(),
         parent_id: this.parentFlow.id,

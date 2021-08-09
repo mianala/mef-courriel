@@ -8,6 +8,7 @@ import { FlowService } from 'src/app/courriel/flows/flow.service';
 import { UserService } from 'src/app/services/user.service';
 import { Entity } from 'src/app/classes/entity';
 import { SearchService } from '../search.service';
+import { EntityService } from 'src/app/services/entity.service';
 
 @Component({
   selector: 'search',
@@ -16,6 +17,7 @@ import { SearchService } from '../search.service';
 })
 export class SearchResultComponent implements OnInit {
   entity: Entity = new Entity();
+  allEntities: Entity[] = [];
   @Input() query: string = '';
 
   activeEntityFilter$ = this.searchService.activeEntityFilter$;
@@ -24,38 +26,57 @@ export class SearchResultComponent implements OnInit {
   results$ = this.flowService.searchAppResult$;
   params$ = this.route.queryParams;
 
-  filteredResult$ = this.params$.pipe(
-    switchMap((params) => {
-      let searchFilters: any = { _and: {} };
+  filteredResult$ = combineLatest([
+    this.params$,
+    this.entityService.allEntities$,
+  ]).pipe(
+    switchMap(([params, allEntities]) => {
+      let searchFilters: any = { _and: [] };
 
-      const entityFilter = parseInt(params.e) ? parseInt(params.e) : 0;
+      const entityIdFilter = parseInt(params.e) ? parseInt(params.e) : 0;
       const labelFilter = params.l ? params.l : '';
       const query = params.q ? params.q : '';
 
-      query &&
-        (searchFilters._and._or = [
-          { title: { _ilike: `%${query}%` } },
-          { content: { _ilike: `%${query}%` } },
-          { labels: { _ilike: `%${query}%` } },
-          { initiator_text: { _ilike: `%${query}%` } },
-          { reference: { _ilike: `%${query}%` } },
+      const entity = allEntities.find((entity) => {
+        return entity.id == entityIdFilter;
+      });
+
+      if (query) {
+        searchFilters._and = [
+          {
+            _or: [
+              { title: { _ilike: `%${query}%` } },
+              { content: { _ilike: `%${query}%` } },
+              { labels: { _ilike: `%${query}%` } },
+              { initiator_text: { _ilike: `%${query}%` } },
+              { reference: { _ilike: `%${query}%` } },
+            ],
+          },
+        ];
+      }
+
+      entityIdFilter &&
+        (searchFilters._and = [
+          ...searchFilters._and,
+          ...[
+            {
+              _or: [
+                { initiator_id: { _eq: entityIdFilter } },
+                {
+                  initiator_text: {
+                    _ilike: `%${entity?.short}%`,
+                  },
+                },
+              ],
+            },
+          ],
         ]);
 
-      entityFilter && (searchFilters._and.initiator_id = { _eq: entityFilter });
       labelFilter && (searchFilters._and.labels = { _eq: labelFilter });
 
-      return this.flowService.searchQuery(searchFilters);
+      console.log(searchFilters);
 
-      // return results.filter((flow: any) => {
-      //   return entityFilter
-      //     ? labelFilter
-      //       ? flow.labels.includes(labelFilter) &&
-      //         flow.initiator_id == entityFilter
-      //       : flow.initiator_id == entityFilter
-      //     : labelFilter
-      //     ? flow.labels.includes(labelFilter)
-      //     : true;
-      // });
+      return this.flowService.searchQuery(searchFilters);
     })
   );
 
@@ -63,6 +84,7 @@ export class SearchResultComponent implements OnInit {
     public flowService: FlowService,
     private searchService: SearchService,
     public userService: UserService,
+    private entityService: EntityService,
     private route: ActivatedRoute
   ) {}
 

@@ -140,10 +140,6 @@ export class EntityService {
     }
   }
 
-  logout() {
-    this.userEntity$.next(null);
-  }
-
   userEntityInfo(entity_id: number) {
     return this.apollo.watchQuery({
       query: EntityQueries.INFO,
