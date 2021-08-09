@@ -60,6 +60,7 @@ export class SearchResultComponent implements OnInit {
           { title: { _ilike: `%${query}%` } },
           { content: { _ilike: `%${query}%` } },
           { labels: { _ilike: `%${query}%` } },
+          { signature: true },
           { initiator_text: { _ilike: `%${query}%` } },
           { reference: { _ilike: `%${query}%` } },
         ]);

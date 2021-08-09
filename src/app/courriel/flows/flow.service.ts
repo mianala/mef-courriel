@@ -322,7 +322,7 @@ export class FlowService {
 
     return this.apollo
       .query({
-        query: FlowQueries.SEARCH,
+        query: FlowQueries.SEARCH_APP_QUERY,
         variables: { where: searchFlowVariables },
       })
       .pipe(FlowWithActions.mapFlows);
