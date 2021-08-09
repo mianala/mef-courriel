@@ -124,6 +124,8 @@ export class FileService {
   }
 
   remove(file: AppFile) {
+    console.log('removing');
+
     this.files$.next(this.files$.value.slice(this.files$.value.indexOf(file)));
   }
 

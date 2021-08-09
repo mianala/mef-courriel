@@ -60,7 +60,7 @@ const FlowQueries = {
   `,
   SIGNATUREPAGE: gql`
     ${Flow.INBOX_FLOW_FIELDS}
-    query get_inbox_flows($entity_id: Int!, $offset: Int!, $limit: Int!) {
+    query get_signature_flows($entity_id: Int!, $offset: Int!, $limit: Int!) {
       flow(
         where: { owner_id: { _eq: $entity_id }, signature: { _eq: true } }
         order_by: { id: desc }
@@ -73,7 +73,7 @@ const FlowQueries = {
   `,
   LECTUREPAGE: gql`
     ${Flow.INBOX_FLOW_FIELDS}
-    query get_inbox_flows($entity_id: Int!, $offset: Int!, $limit: Int!) {
+    query get_lecture_flows($entity_id: Int!, $offset: Int!, $limit: Int!) {
       flow(
         where: { owner_id: { _eq: $entity_id }, signature: { _neq: true } }
         order_by: { id: desc }

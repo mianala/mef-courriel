@@ -70,6 +70,6 @@ export class FilesComponent implements OnInit, ControlValueAccessor {
 
   remove(file: AppFile) {
     this.files.splice(this.files.indexOf(file), 1);
-    this.fileService.uploadedFiles.next(this.files);
+    this.fileService.remove(file);
   }
 }

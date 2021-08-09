@@ -27,6 +27,8 @@ export class SaveFlowFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.fileUploadService.files$.next([]);
+
     this.saveFlowForm = this.fb.group({
       content: [''],
       title: [
@@ -42,7 +44,7 @@ export class SaveFlowFormComponent implements OnInit {
       note: [''],
       labels: [[]],
       files: [[]],
-      entity: [new Entity()],
+      entity: [],
       numero: [
         ,
         Validators.compose([Validators.required, Validators.minLength(1)]),
@@ -55,14 +57,8 @@ export class SaveFlowFormComponent implements OnInit {
         new Date(),
         Validators.compose([Validators.required, Validators.minLength(1)]),
       ],
-      urgent: [
-        false,
-        Validators.compose([Validators.required, Validators.minLength(1)]),
-      ],
-      signature: [
-        false,
-        Validators.compose([Validators.required, Validators.minLength(1)]),
-      ],
+      urgent: [false],
+      signature: [false],
     });
 
     // push files to files || why not inside files component? Because it will be used everywhere and this isn't
@@ -112,6 +108,7 @@ export class SaveFlowFormComponent implements OnInit {
       letter_text: form.letter_text,
       numero: form.numero,
       signature: form.signature,
+      urgent: form.urgent,
       date_received: form.date_received,
       owner_id: this.user?.entity_id,
       initiator_id: form.entity.id ? form.entity.id : null,
@@ -126,6 +123,7 @@ export class SaveFlowFormComponent implements OnInit {
       this.fileUploadService.progress$.next(null);
       this.notification.flowSaved(data.data.insert_flow.returning[0]);
       this.loading = false;
+      this.reset();
     });
   }
   save() {}
@@ -143,5 +141,7 @@ export class SaveFlowFormComponent implements OnInit {
       date: new Date(),
       date_received: new Date(),
     });
+
+    this.fileUploadService.files$.next([]);
   }
 }

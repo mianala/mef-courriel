@@ -59,7 +59,7 @@
   </div>
 </a>
 <div class="info">
-  <mat-icon color="warn" title="Urgent!" *ngIf="flow.is.urgent()"
+  <mat-icon color="warn" title="Urgent!" *ngIf="flow.urgent"
     >error_outline</mat-icon
   ><span class="date">
     {{ flow.shortTime() }}
@@ -76,7 +76,7 @@
   </a>
   <a
     class="green"
-    mat-icon-button
+    mat-icon-button 
     [ngSwitch]="flow.read"
     (click)="flow.toggleRead()"
   >

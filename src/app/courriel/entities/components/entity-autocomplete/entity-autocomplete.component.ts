@@ -86,8 +86,8 @@ export class EntityAutocompleteComponent
   onTouched = () => {};
 
   writeValue(obj: Entity): void {
-    if (!obj.id) return;
-
+    this.value = new Entity();
+    if (!obj || !obj.id) return;
     this.value = obj;
   }
   registerOnChange(fn: any): void {
