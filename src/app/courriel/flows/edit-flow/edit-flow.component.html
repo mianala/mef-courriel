@@ -48,14 +48,13 @@
         <mat-option value="Copie">Copie</mat-option>
         <mat-option value="Confidentiel">Confidentiel</mat-option>
         <mat-option value="Enveloppe">Enveloppe</mat-option>
-        <mat-option value="Lecture">Lecture</mat-option>
-        <mat-option value="signature">signature</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
   <mat-datepicker disabled="false" #picker></mat-datepicker>
   <mat-datepicker disabled="false" #recieved_picker></mat-datepicker>
 
+  <!-- Can't prefill entity in entity-autocomplete -->
   <entity-autocomplete
     label="Provenance / Prep"
     formControlName="entity"
@@ -95,9 +94,12 @@
     <mat-label>Observations / Instructions</mat-label>
     <textarea name="content" formControlName="content" matInput></textarea>
   </mat-form-field>
-  <mat-checkbox formControlName="urgent" name="urgent"
-    >Urgent <mat-icon color="warn">error_outline</mat-icon></mat-checkbox
-  >
+  <div class="columns">
+    <mat-checkbox formControlName="signature" name="signature"
+      >Signature</mat-checkbox
+    >
+    <mat-checkbox formControlName="urgent" name="urgent">Urgent</mat-checkbox>
+  </div>
   <labels formControlName="labels"></labels>
   <div aria-label="File list" class="files">
     <div *ngFor="let file of (flow$ | async)?.files" class="file">
@@ -117,7 +119,11 @@
     <file-upload-button></file-upload-button>
 
     <button
-      [disabled]="!editFlowForm.valid && !editFlowForm.pristine"
+      [disabled]="
+        !editFlowForm.valid &&
+        !editFlowForm.pristine &&
+        !!(uploadFileProgress$ | async)
+      "
       (click)="submit()"
       *ngIf="!loading"
       mat-raised-button

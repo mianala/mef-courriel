@@ -22,9 +22,12 @@
     <mat-label>Observations / Instructions</mat-label>
     <textarea required formControlName="content" matInput></textarea>
   </mat-form-field>
-  <mat-checkbox formControlName="urgent" name="urgent" name="urgent"
-    >Urgent <mat-icon color="warn">error_outline</mat-icon></mat-checkbox
-  >
+  <div class="columns">
+    <mat-checkbox formControlName="signature" name="signature"
+      >Signature</mat-checkbox
+    >
+    <mat-checkbox formControlName="urgent" name="urgent">Urgent</mat-checkbox>
+  </div>
   <mat-form-field appearance="outline">
     <mat-label>Note</mat-label>
     <textarea formControlName="note" matInput></textarea>
@@ -33,8 +36,14 @@
   <files formControlName="files"></files>
   <div class="columns">
     <file-upload-button></file-upload-button>
-    <button mat-raised-button color="primary" cdkFocusInitial>
-      Envoyer <mat-icon>send</mat-icon>
+    <button
+      [disabled]="!sendFlowForm.valid"
+      (click)="submit()"
+      mat-raised-button
+      color="primary"
+      cdkFocusInitial
+    >
+      Envoyer
     </button>
     <!-- <button mat-raised-button="">VOIR CORRIER ENREGISTRE</button> -->
   </div>

@@ -59,6 +59,10 @@ export class SaveFlowFormComponent implements OnInit {
         false,
         Validators.compose([Validators.required, Validators.minLength(1)]),
       ],
+      signature: [
+        false,
+        Validators.compose([Validators.required, Validators.minLength(1)]),
+      ],
     });
 
     // push files to files || why not inside files component? Because it will be used everywhere and this isn't
@@ -107,6 +111,7 @@ export class SaveFlowFormComponent implements OnInit {
       type_text: form.type_text,
       letter_text: form.letter_text,
       numero: form.numero,
+      signature: form.signature,
       date_received: form.date_received,
       owner_id: this.user?.entity_id,
       initiator_id: form.entity.id ? form.entity.id : null,
@@ -116,18 +121,13 @@ export class SaveFlowFormComponent implements OnInit {
       },
     };
 
-    this.flowService
-      .insertFlows([flow_variables])
-      .subscribe(this.flowSaved.bind(this));
+    this.flowService.insertFlows([flow_variables]).subscribe((data: any) => {
+      this.fileUploadService.files$.next([]);
+      this.fileUploadService.progress$.next(null);
+      this.notification.flowSaved(data.data.insert_flow.returning[0]);
+      this.loading = false;
+    });
   }
-
-  flowSaved(data: any) {
-    this.fileUploadService.files$.next([]);
-    this.fileUploadService.progress$.next(null);
-    this.notification.flowSaved(data.data.insert_flow.returning[0]);
-    this.loading = false;
-  }
-
   save() {}
 
   typingEntity(e: String) {

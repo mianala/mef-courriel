@@ -63,6 +63,7 @@
   <entity-autocomplete
     label="Provenance / Prep"
     formControlName="entity"
+    required
   ></entity-autocomplete>
   <div class="columns">
     <mat-form-field appearance="outline">
@@ -99,9 +100,12 @@
     <mat-label>Observations / Instructions</mat-label>
     <textarea name="content" formControlName="content" matInput></textarea>
   </mat-form-field>
-  <mat-checkbox formControlName="urgent" name="urgent"
-    >Urgent <mat-icon color="warn">error_outline</mat-icon></mat-checkbox
-  >
+  <div class="columns">
+    <mat-checkbox formControlName="signature" name="signature"
+      >Signature</mat-checkbox
+    >
+    <mat-checkbox formControlName="urgent" name="urgent">Urgent</mat-checkbox>
+  </div>
   <labels formControlName="labels"></labels>
 
   <files formControlName="files"></files>

@@ -36,6 +36,7 @@ export class EditFlowComponent implements OnInit {
   );
 
   deleteFile = this.fileService.removeExistingFile;
+  uploadFileProgress$ = this.fileService.progress$;
 
   constructor(
     private flowService: FlowService,
@@ -80,6 +81,10 @@ export class EditFlowComponent implements OnInit {
         false,
         Validators.compose([Validators.required, Validators.minLength(1)]),
       ],
+      signature: [
+        false,
+        Validators.compose([Validators.required, Validators.minLength(1)]),
+      ],
     });
 
     this.flow$.subscribe((flow: Flow) => {
@@ -98,6 +103,7 @@ export class EditFlowComponent implements OnInit {
         date_received: flow.date_received,
         reference: flow.reference,
         urgent: flow.urgent,
+        signature: flow.signature,
         labels: flow.labels?.length ? flow.labels.split(',') : null,
       });
     });
@@ -143,6 +149,7 @@ export class EditFlowComponent implements OnInit {
       user_id: this.user?.id,
       date: form.date,
       urgent: form.urgent,
+      signature: form.signature,
       type_text: form.type_text,
       letter_text: form.letter_text,
       numero: form.numero,

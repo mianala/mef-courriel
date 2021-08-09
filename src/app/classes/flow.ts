@@ -16,6 +16,7 @@ export class Flow {
   important = false;
   urgent = false;
   read = false;
+  signature = false;
   action = 0;
 
   // flow information
@@ -183,6 +184,7 @@ export class Flow {
       urgent
       important
       read
+      signature
 
       # assignee
       assignee_id

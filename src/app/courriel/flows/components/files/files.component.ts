@@ -1,4 +1,10 @@
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  forwardRef,
+  HostBinding,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { AppFile } from 'src/app/classes/file';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FileService } from 'src/app/services/file.service';
@@ -22,6 +28,8 @@ export class FilesComponent implements OnInit, ControlValueAccessor {
 
   progress$ = this.fileService.progress$;
   progress: number[] = [];
+
+  @HostBinding('class.empty') empty = !this.files.length;
 
   constructor(private fileService: FileService) {}
 
@@ -49,13 +57,13 @@ export class FilesComponent implements OnInit, ControlValueAccessor {
     }
 
     this.files = files;
+    this.empty = !this.files.length;
     this.onChange(files);
     this.onTouched();
   }
 
   ngOnInit() {
     this.files$.pipe(skip(1)).subscribe((files) => {
-      console.log('current files', files);
       this.setValue(files);
     });
   }

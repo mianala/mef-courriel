@@ -48,6 +48,7 @@ export class SendFlowFormComponent implements OnInit {
       content: ['', Validators.compose([Validators.required])],
       note: [],
       urgent: [],
+      signature: [],
       receivers: [[], Validators.compose([Validators.required])],
       files: [],
     });
@@ -74,7 +75,8 @@ export class SendFlowFormComponent implements OnInit {
         note: form.note,
         labels: form.labels ? form.labels.join(',') : null,
         files: form.files,
-        status: form.urgent ? 1 : null,
+        urgent: form.urgent,
+        signature: form.signature,
       };
 
       flow = entity.id
