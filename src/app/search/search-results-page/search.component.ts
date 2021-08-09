@@ -72,9 +72,11 @@ export class SearchResultComponent implements OnInit {
           ],
         ]);
 
-      labelFilter && (searchFilters._and.labels = { _eq: labelFilter });
-
-      console.log(searchFilters);
+      labelFilter &&
+        (searchFilters._and = [
+          ...searchFilters._and,
+          ...[{ labels: { _ilike: `%${labelFilter}%` } }],
+        ]);
 
       return this.flowService.searchQuery(searchFilters);
     })

@@ -24,7 +24,8 @@ class EntityWithActions extends Entity {
     });
   });
 
-  static mapEntityInfo = map((info: any): IEntityInfo => {
+  static mapEntityInfo = map((rawInfo: any): IEntityInfo => {
+    const info = rawInfo.data.entity[0];
     return {
       labels: info?.labels ? info?.labels.split(',') : null,
       letter_texts: info?.letter_texts ? info?.letter_texts.split(',') : null,
@@ -33,9 +34,11 @@ class EntityWithActions extends Entity {
     };
   });
 
-  static mapEntityLabelsInfo = map((info: IEntityInfo | null) =>
-    info ? info.labels : null
-  );
+  static mapEntityLabelsInfo = map((info: IEntityInfo | null) => {
+    console.log(info);
+
+    return info ? info.labels : null;
+  });
 
   static mapUserEntity = map((val: any): Entity => {
     const entity_query_result = val.data.entity[0];
@@ -200,6 +203,21 @@ export class EntityService {
         _inc: inc,
       },
     });
+  }
+
+  updateActiveEntity(set: any = {}, inc: any = {}) {
+    return this.activeUserEntityId$.pipe(
+      switchMap((entity_id) => {
+        return this.apollo.mutate({
+          mutation: EntityQueries.UPDATE,
+          variables: {
+            entity_id: entity_id,
+            _set: set,
+            _inc: inc,
+          },
+        });
+      })
+    );
   }
 
   desactivateEntity(entity_id: number) {

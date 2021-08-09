@@ -108,15 +108,9 @@ export class LabelsComponent implements OnInit, ControlValueAccessor {
 
     this.labelCtrl.setValue('');
 
-    const active_entity = this.entityService._userEntity;
-
-    if (!active_entity) {
-      return;
-    }
-
     if (this.updateEntityLabels && !this.allLabels.includes(value)) {
       this.entityService
-        .updateEntity(active_entity.id, {
+        .updateActiveEntity({
           labels: [...this.allLabels, ...[value]].join(','),
         })
         .subscribe((data) => {
@@ -144,12 +138,8 @@ export class LabelsComponent implements OnInit, ControlValueAccessor {
     this.allLabels = this.labels.slice();
     console.log(this.allLabels);
 
-    if (!active_entity) {
-      return;
-    }
-
     this.entityService
-      .updateEntity(active_entity.id, {
+      .updateActiveEntity({
         labels: this.labels.join(','),
       })
       .subscribe((data) => {

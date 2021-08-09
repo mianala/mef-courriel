@@ -58,8 +58,6 @@ class UserWithActions extends User {
 
   static mapUsers = map((val: any): UserWithActions[] => {
     return val.data.user.map((val: any) => {
-      console.log(val);
-
       return new UserWithActions(val);
     });
   });
