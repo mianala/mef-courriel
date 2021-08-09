@@ -63,7 +63,6 @@ export class EditFlowComponent implements OnInit {
       letter_text: ['Lettre'],
       note: [''],
       labels: [[]],
-      files: [[]],
       entity: [new Entity()],
       numero: [
         ,
@@ -126,7 +125,7 @@ export class EditFlowComponent implements OnInit {
       lastModified: number;
     }[] = [];
 
-    form.files?.forEach((file: any) => {
+    this.fileService.files$.value.forEach((file: any) => {
       form_files.push({
         name: file.name,
         flow_id: this.flow_id,

@@ -22,54 +22,14 @@ import { skip } from 'rxjs/operators';
     },
   ],
 })
-export class FilesComponent implements OnInit, ControlValueAccessor {
-  files: AppFile[] = [];
-  files$ = this.fileService.files$;
+export class FilesComponent implements OnInit {
+  @HostBinding('class.empty') empty = true;
 
-  progress$ = this.fileService.progress$;
-  progress: number[] = [];
-
-  @HostBinding('class.empty') empty = !this.files.length;
-
-  constructor(private fileService: FileService) {}
-
-  onChange!: (files: AppFile[] | null) => void;
-  onTouched!: () => void;
-
-  writeValue(obj: any): void {
-    if (!obj) {
-      this.files = [];
-      return;
-    }
-    this.files = obj;
-  }
-  registerOnChange(fn: any): void {
-    this.onChange = fn;
-  }
-  registerOnTouched(fn: any): void {
-    this.onTouched = fn;
-  }
-
-  setValue(files: AppFile[]) {
-    if (!files.length) {
-      this.onChange(null);
-      return;
-    }
-
-    this.files = files;
-    this.empty = !this.files.length;
-    this.onChange(files);
-    this.onTouched();
-  }
+  constructor(public fileService: FileService) {}
 
   ngOnInit() {
-    this.files$.pipe(skip(1)).subscribe((files) => {
-      this.setValue(files);
+    this.fileService.files$.subscribe((files: AppFile[]) => {
+      this.empty = !files.length;
     });
-  }
-
-  remove(file: AppFile) {
-    this.files.splice(this.files.indexOf(file), 1);
-    this.fileService.remove(file);
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Apollo, QueryRef } from 'apollo-angular';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { Entity } from 'src/app/classes/entity';
 import { NotificationService } from 'src/app/services/notification.service';
 import EntityQueries from '../queries/entity.queries';
@@ -77,14 +77,6 @@ interface IEntityInfo {
 export class EntityService {
   _userEntity: Entity | undefined;
 
-  userEntityInfoQuery:
-    | QueryRef<
-        unknown,
-        {
-          entity_id: number;
-        }
-      >
-    | undefined;
   activeUserIdEntityInfoQuery:
     | QueryRef<
         unknown,
@@ -115,37 +107,34 @@ export class EntityService {
 
   activeUserEntityId$ = this.userService.activeUserEntityId$;
 
-  userEntity$ = new BehaviorSubject<Entity | null>(null);
-  userEntityInfo$ = new BehaviorSubject<IEntityInfo | null>(null);
-
-  userEntityLabels$ = this.userEntityInfo$.pipe(
-    EntityWithActions.mapEntityLabelsInfo
-  );
   userEntityObservations$: Observable<any> | undefined;
   userEntityTypeTexts$: Observable<any> | undefined;
   userEntityLetterTexts$: Observable<any> | undefined;
 
+  userEntityInfo$ = this.activeUserEntityId$
+    .pipe(
+      switchMap((id: number) => {
+        return this.userEntityInfo(id).valueChanges;
+      })
+    )
+    .pipe(EntityWithActions.mapEntityInfo);
+
+  userEntity$ = this.activeUserEntityId$
+    .pipe(
+      switchMap((id: number) => {
+        return this.userEntity(id).valueChanges;
+      })
+    )
+    .pipe(EntityWithActions.mapUserEntity);
+
+  userEntityLabels$ = this.userEntityInfo$.pipe(
+    EntityWithActions.mapEntityLabelsInfo
+  );
   constructor(
     private apollo: Apollo,
     private userService: UserService,
     private notification: NotificationService
   ) {
-    this.activeUserEntityId$.subscribe((userEntityId) => {
-      this.userEntityInfoQuery = this.userEntityInfo(userEntityId);
-      this.userEntityQuery = this.userEntity(userEntityId);
-
-      this.userEntityInfoQuery.valueChanges
-        .pipe(EntityWithActions.mapEntityInfo)
-        .subscribe((info) => this.userEntityInfo$.next(info));
-
-      this.userEntityQuery.valueChanges
-        .pipe(EntityWithActions.mapUserEntity)
-        .subscribe((entity) => {
-          this.userEntity$.next(entity);
-          this._userEntity = entity;
-        });
-    });
-
     if (!EntityService.instance) {
       EntityService.instance = this;
     }

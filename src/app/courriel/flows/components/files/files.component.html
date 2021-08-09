@@ -1,5 +1,9 @@
 <!-- TODO: merge files in view flow page, differs in [Viewer, Remove Button, Progress bar] -->
 <div class="files">
-  <file class="file" *ngFor="let file of files" [file]="file"></file>
+  <file
+    class="file"
+    *ngFor="let file of fileService.files$ | async"
+    [file]="file"
+  ></file>
 </div>
 <progress-bar id="progress-bar"></progress-bar>

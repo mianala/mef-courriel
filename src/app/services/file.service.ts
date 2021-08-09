@@ -125,8 +125,11 @@ export class FileService {
 
   remove(file: AppFile) {
     console.log('removing');
+    const files = this.files$.value;
+    const index = files.indexOf(file);
+    files.splice(index, 1);
 
-    this.files$.next(this.files$.value.slice(this.files$.value.indexOf(file)));
+    this.files$.next(files);
   }
 
   updateFile(file_id: number, set: any = {}, inc: any = {}) {

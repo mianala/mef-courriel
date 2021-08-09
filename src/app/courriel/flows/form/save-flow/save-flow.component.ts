@@ -82,7 +82,7 @@ export class SaveFlowFormComponent implements OnInit {
       lastModified: number;
     }[] = [];
 
-    form.files.forEach((file: any) => {
+    this.fileUploadService.files$.value.forEach((file: any) => {
       form_files.push({
         name: file.name,
         size: file.size,
