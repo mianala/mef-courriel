@@ -54,3 +54,16 @@
     }
   }
 }
+
+// pdf
+
+::ng-deep {
+  .ng2-pdf-viewer-container {
+    height: auto !important;
+    width: 100% !important;
+    // position: relative !important;
+    .page {
+      border: 1px dashed grey;
+    }
+  }
+}
