@@ -88,6 +88,12 @@ export class UserService {
     distinctUntilChanged()
   );
 
+  activeUserId$ = this.activeUser$.pipe(
+    filter((user) => !!user),
+    map((user) => user!.id),
+    distinctUntilChanged()
+  );
+
   _activeUser: User | null = null;
 
   loggedIn$ = this.activeUser$.pipe(map((user) => (user ? true : false)));

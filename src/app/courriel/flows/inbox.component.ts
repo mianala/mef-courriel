@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
-import { combineLatest } from 'rxjs';
+import { Observable } from '@apollo/client/utilities';
+import { combineLatest, Subject } from 'rxjs';
 import {
   distinctUntilChanged,
   map,
@@ -50,50 +51,31 @@ export class FlowsComponent implements OnInit {
     })
   );
 
-  appSearchFlows$ = this.flowService.flowSearchResult$;
+  queryParams$ = this.route.queryParams;
 
-  queryParams$ = this.route.queryParams.pipe(
-    tap((params) => {
+  flows$ = this.queryParams$.pipe(
+    switchMap((params: any) => {
       this.activeTab = params.tab;
+      let flow = this.inboxFlowsWithPagination$;
       switch (this.activeTab) {
         case Strings.inboxTypes.main.tabLabel:
-          this.flows$ = this.inboxFlowsWithPagination$;
+          flow = this.inboxFlowsWithPagination$;
           break;
-        case Strings.inboxTypes.assigned.tabLabel: {
-          if (!this.assignedFlows$) return;
-          this.flows$ = this.assignedFlows$;
+        case Strings.inboxTypes.assigned.tabLabel:
+          flow = this.assignedFlows$;
           break;
-        }
         case Strings.inboxTypes.sign.tabLabel:
-          this.flows$ = this.signatureFlowsWithPagination$;
+          flow = this.signatureFlowsWithPagination$;
           break;
         case Strings.inboxTypes.lecture.tabLabel:
-          this.flows$ = this.lectureFlowsWithPagination$;
+          flow = this.lectureFlowsWithPagination$;
           break;
         case 'SEARCH':
-          this.flows$ = this.searchCtrl.valueChanges.pipe(
-            switchMap((query: string) => {
-              const where = { _and: {} };
-              where._and = {
-                _or: [
-                  { title: { _ilike: `%${query}%` } },
-                  { content: { _ilike: `%${query}%` } },
-                  { labels: { _ilike: `%${query}%` } },
-                  { initiator_text: { _ilike: `%${query}%` } },
-                  { reference: { _ilike: `%${query}%` } },
-                ],
-              };
-              console.log(where);
-
-              return this.flowService.filterQuery(where);
-            }),
-            tap((flows) => console.log(flows))
-          );
-          break;
-
-        default:
+          flow = this.appSearchFlows$;
           break;
       }
+
+      return flow;
     })
   );
 
@@ -112,6 +94,25 @@ export class FlowsComponent implements OnInit {
         items
       );
     })
+  );
+
+  appSearchFlows$ = this.searchCtrl.valueChanges.pipe(
+    switchMap((query: string) => {
+      const where = { _and: {} };
+      where._and = {
+        _or: [
+          { title: { _ilike: `%${query}%` } },
+          { content: { _ilike: `%${query}%` } },
+          { labels: { _ilike: `%${query}%` } },
+          { initiator_text: { _ilike: `%${query}%` } },
+          { reference: { _ilike: `%${query}%` } },
+        ],
+      };
+      console.log(where);
+
+      return this.flowService.filterQuery(where);
+    }),
+    tap((flows) => console.log(flows))
   );
 
   signatureFlowsWithPagination$ = combineLatest([
@@ -193,8 +194,6 @@ export class FlowsComponent implements OnInit {
     },
   ];
 
-  flows$ = this.inboxFlowsWithPagination$;
-
   constructor(
     public flowService: FlowService,
     private entityService: EntityService,
@@ -215,5 +214,7 @@ export class FlowsComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.searchCtrl = new FormControl('');
+  }
 }

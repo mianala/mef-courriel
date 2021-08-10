@@ -37,7 +37,6 @@ class FlowWithActions extends Flow {
     } else {
       this.markAsUnread();
     }
-    FlowService.getInstance().refetchFlows();
   }
 
   viewRoute() {}
@@ -80,54 +79,28 @@ export class FlowService {
   searchAppResult$ = new BehaviorSubject<Flow[]>([]);
 
   searchFlows$ = new BehaviorSubject<Flow[]>([]);
-  activeUser$ = this.userService.activeUser$.pipe(
-    filter((user) => !!user),
-    tap((user: User | null) => {
-      this.inboxFlowsQuery = this.inboxFlows(user!.entity.id);
-      this.sentFlowsQuery = this.sentFlows(user!.entity.id);
-      this.assignedFlowsQuery = this.assignedFlows(user!.id);
 
-      this.inboxFlows$ = this.inboxFlowsQuery.valueChanges.pipe(
-        FlowWithActions.mapFlows
-      );
-      this.sentFlows$ = this.sentFlowsQuery.valueChanges.pipe(
-        FlowWithActions.mapFlows
-      );
-      this.assignedFlows$ = this.assignedFlowsQuery.valueChanges.pipe(
+  inboxFlows$ = this.userService.activeUserEntityId$.pipe(
+    switchMap((entity_id) => {
+      return this.inboxFlows(entity_id).valueChanges.pipe(
         FlowWithActions.mapFlows
       );
     })
   );
 
-  inboxFlows$: Observable<Flow[]> | undefined;
-  sentFlows$: Observable<Flow[]> | undefined;
-  assignedFlows$: Observable<FlowWithActions[]> | undefined;
+  sentFlows$ = this.userService.activeUserEntityId$.pipe(
+    switchMap((entity_id) => {
+      return this.sentFlows(entity_id).valueChanges.pipe(
+        FlowWithActions.mapFlows
+      );
+    })
+  );
 
-  inboxFlowsQuery:
-    | QueryRef<
-        unknown,
-        {
-          entity_id: number;
-        }
-      >
-    | undefined;
-  sentFlowsQuery:
-    | QueryRef<
-        unknown,
-        {
-          entity_id: number;
-        }
-      >
-    | undefined;
-  assignedFlowsQuery:
-    | QueryRef<
-        unknown,
-        {
-          user_id: number;
-        }
-      >
-    | undefined;
-
+  assignedFlows$ = this.userService.activeUserId$.pipe(
+    switchMap((id) => {
+      return this.assignedFlows(id).valueChanges.pipe(FlowWithActions.mapFlows);
+    })
+  );
   constructor(
     private apollo: Apollo,
     private entityService: EntityService,
@@ -135,8 +108,6 @@ export class FlowService {
     private location: Location,
     private notification: NotificationService
   ) {
-    this.activeUser$.subscribe();
-
     if (!FlowService.instance) {
       FlowService.instance = this;
     }
@@ -166,13 +137,6 @@ export class FlowService {
         map((flows: Flow[]) => flows[0])
       );
   }
-
-  // FIXME: optimize
-  refetchFlows = () => {
-    this.inboxFlowsQuery?.refetch();
-    this.assignedFlowsQuery?.refetch();
-    this.sentFlowsQuery?.refetch();
-  };
 
   deleteFlow(flow_id: number) {
     if (!confirm('Voulez-vous vraiment supprimer ce courriel?')) {
