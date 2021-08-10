@@ -1,6 +1,7 @@
 <form *ngIf="flow$ | async" [formGroup]="editFlowForm" class="box">
   <div class="header">
-    <h1>Modifier: {{ (flow$ | async)?.title }}</h1>
+    <h1><back></back> Modifier</h1>
+    <h3>{{ (flow$ | async)?.title }}</h3>
   </div>
   <div class="columns">
     <mat-form-field appearance="outline">

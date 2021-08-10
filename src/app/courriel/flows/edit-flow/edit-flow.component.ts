@@ -168,8 +168,7 @@ export class EditFlowComponent implements OnInit {
     this.flowService
       .updateFlow(this.flow_id, flowVariables)
       .subscribe((data: any) => {
-        this.fileService.files$.next([]);
-        this.fileService.progress$.next(null);
+        this.fileService.reset();
         this.notification.notify('Modifications Enregistré');
         this.loading = false;
       });

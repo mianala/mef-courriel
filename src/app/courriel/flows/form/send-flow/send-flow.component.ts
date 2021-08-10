@@ -114,9 +114,9 @@ export class SendFlowFormComponent implements OnInit {
     this.entityService.incrementEntitySentCount();
 
     this.flowService.insertFlows(flows).subscribe((data) => {
-      this.notification.notify('Envoyé');
+      this.notification.notify('Envoyé', 4000);
+      this.sendFlowForm.reset();
+      this.fileService.reset();
     });
-
-    console.log(flows);
   }
 }

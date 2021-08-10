@@ -21,13 +21,13 @@ export class SaveFlowFormComponent implements OnInit {
   constructor(
     private flowService: FlowService,
     private fb: FormBuilder,
-    private fileUploadService: FileService,
+    private fileService: FileService,
     private userService: UserService,
     private notification: NotificationService
   ) {}
 
   ngOnInit(): void {
-    this.fileUploadService.files$.next([]);
+    this.fileService.files$.next([]);
 
     this.saveFlowForm = this.fb.group({
       content: [''],
@@ -82,7 +82,7 @@ export class SaveFlowFormComponent implements OnInit {
       lastModified: number;
     }[] = [];
 
-    this.fileUploadService.files$.value.forEach((file: any) => {
+    this.fileService.files$.value.forEach((file: any) => {
       form_files.push({
         name: file.name,
         size: file.size,
@@ -119,11 +119,18 @@ export class SaveFlowFormComponent implements OnInit {
     };
 
     this.flowService.insertFlows([flow_variables]).subscribe((data: any) => {
-      this.fileUploadService.files$.next([]);
-      this.fileUploadService.progress$.next(null);
+      this.fileService.files$.next([]);
+      this.fileService.progress$.next(null);
       this.notification.flowSaved(data.data.insert_flow.returning[0]);
       this.loading = false;
-      this.reset();
+
+      this.saveFlowForm.reset();
+      this.saveFlowForm.patchValue({
+        date: new Date(),
+        date_received: new Date(),
+      });
+
+      this.fileService.reset();
     });
   }
   save() {}
@@ -133,15 +140,5 @@ export class SaveFlowFormComponent implements OnInit {
       project_owner_id: null,
       project_owner_text: e,
     });
-  }
-
-  reset() {
-    this.saveFlowForm.reset();
-    this.saveFlowForm.patchValue({
-      date: new Date(),
-      date_received: new Date(),
-    });
-
-    this.fileUploadService.files$.next([]);
   }
 }

@@ -65,6 +65,9 @@ export class Flow {
     saved: () => {
       return this.action == 1;
     },
+    received: () => {
+      return this.action !== 1;
+    },
     sent: () => {
       return this.action == 2;
     },

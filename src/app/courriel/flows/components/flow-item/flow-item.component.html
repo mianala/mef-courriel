@@ -76,8 +76,9 @@
   </a>
   <a
     class="green"
-    mat-icon-button 
+    mat-icon-button
     [ngSwitch]="flow.read"
+    *ngIf="layout != 'sent'"
     (click)="flow.toggleRead()"
   >
     <ng-container *ngSwitchCase="false">
@@ -90,17 +91,18 @@
       <mat-icon title="Marqué Non Lu" class="mat-18">mark_as_unread</mat-icon>
     </ng-container>
   </a>
-  <a
+  <!-- <a
     mat-icon-button
     [routerLink]="Link.FLOW_ASSIGN"
     [queryParams]="{ flow_id: flow.id }"
   >
     <mat-icon class="mat-18">reply</mat-icon>
-  </a>
+  </a> -->
   <a
     mat-icon-button
     [routerLink]="Link.FLOW_ASSIGN"
     [queryParams]="{ flow_id: flow.id }"
+    *ngIf="layout != 'sent'"
   >
     <mat-icon class="mat-18">person_add_alt</mat-icon>
   </a>
@@ -114,6 +116,7 @@
   <a
     mat-icon-button
     [routerLink]="Link.FLOW_SEND"
+    *ngIf="layout != 'sent'"
     [queryParams]="{ flow_id: flow.id }"
   >
     <mat-icon color="primary" class="mat-18">send</mat-icon>

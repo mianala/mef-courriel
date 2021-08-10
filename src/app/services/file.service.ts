@@ -132,6 +132,11 @@ export class FileService {
     this.files$.next(files);
   }
 
+  reset() {
+    this.files$.next([]);
+    this.progress$.next(null);
+  }
+
   updateFile(file_id: number, set: any = {}, inc: any = {}) {
     return this.apollo.mutate({
       mutation: FileQueries.UPDATE,
