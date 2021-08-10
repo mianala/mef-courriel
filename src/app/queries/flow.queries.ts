@@ -126,7 +126,8 @@ const FlowQueries = {
     ${Entity.CORE_ENTITY_FIELDS}
     ${Flow.CORE_FLOW_FIELDS}
     query searchFlows($where: flow_bool_exp = {}) {
-      flow(where: $where, order_by: { id: desc }) {
+      flow(where: $where, order_by: { id: desc },
+        limit: 100) {
         ...CoreFlowFields
         initiator {
           ...CoreEntityFields
