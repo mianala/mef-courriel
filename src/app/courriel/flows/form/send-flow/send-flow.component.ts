@@ -9,6 +9,7 @@ import { FlowService } from '../../flow.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { map, switchMap } from 'rxjs/operators';
 import { NotificationService } from 'src/app/services/notification.service';
+import { FileService } from 'src/app/services/file.service';
 
 @Component({
   selector: 'send-flow-form',
@@ -35,6 +36,7 @@ export class SendFlowFormComponent implements OnInit {
     private route: ActivatedRoute,
     private flowService: FlowService,
     private userService: UserService,
+    private fileService: FileService,
     private notification: NotificationService,
     private fb: FormBuilder,
     private entityService: EntityService
@@ -47,8 +49,8 @@ export class SendFlowFormComponent implements OnInit {
       labels: [],
       content: ['', Validators.compose([Validators.required])],
       note: [],
-      urgent: [],
-      signature: [],
+      urgent: [false],
+      signature: [false],
       receivers: [[], Validators.compose([Validators.required])],
       files: [],
     });
@@ -60,21 +62,43 @@ export class SendFlowFormComponent implements OnInit {
     const form = this.sendFlowForm.value;
     const flows: any[] = [];
 
-    if (!this.userEntity || !this.activeUser) return;
+    if (!this.activeUser) return;
 
-    console.log(form);
+    const form_files: {
+      name: string;
+      size: number;
+      type: string;
+      src: string;
+      destination: string;
+      filename: string;
+      lastModified: number;
+    }[] = [];
+
+    this.fileService.files$.value.forEach((file: any) => {
+      form_files.push({
+        name: file.name,
+        size: file.size,
+        destination: file.destination,
+        filename: file.filename,
+        type: file.type,
+        src: file.src,
+        lastModified: file.lastModified.toString(),
+      });
+    });
 
     form.receivers.forEach((entity: Entity) => {
       let flow = {
         user_id: this.activeUser!.id,
-        initiator_id: this.userEntity!.id,
+        initiator_id: this.activeUser!.entity_id,
         action: 2,
         root_id: this.parentFlow.rootId(),
         parent_id: this.parentFlow.id,
         content: form.content,
         note: form.note,
         labels: form.labels ? form.labels.join(',') : null,
-        files: form.files,
+        files: {
+          data: form_files,
+        },
         urgent: form.urgent,
         signature: form.signature,
       };
@@ -87,9 +111,11 @@ export class SendFlowFormComponent implements OnInit {
     });
 
     this.entityService.incrementEntitySentCount();
+
     this.flowService.insertFlows(flows).subscribe((data) => {
-      console.log(data);
       this.notification.notify('Envoyé');
     });
+
+    console.log(flows);
   }
 }

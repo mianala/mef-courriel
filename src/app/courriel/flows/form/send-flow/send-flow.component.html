@@ -33,12 +33,11 @@
     <textarea formControlName="note" matInput></textarea>
   </mat-form-field>
   <labels formControlName="labels"></labels>
-  <files formControlName="files"></files>
+  <files></files>
   <div class="columns">
     <file-upload-button></file-upload-button>
     <button
       [disabled]="!sendFlowForm.valid"
-      (click)="submit()"
       mat-raised-button
       color="primary"
       cdkFocusInitial

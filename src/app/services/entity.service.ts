@@ -35,8 +35,6 @@ class EntityWithActions extends Entity {
   });
 
   static mapEntityLabelsInfo = map((info: IEntityInfo | null) => {
-    console.log(info);
-
     return info ? info.labels : null;
   });
 
@@ -239,11 +237,9 @@ export class EntityService {
   incrementEntitySentCount() {
     const inc = { sent_count: 1 };
 
-    this.updateEntity(this._userEntity!.id, {}, inc).subscribe((data) =>
+    this.updateActiveEntity({}, inc).subscribe((data) =>
       console.log('incremented entity sent count', data)
     );
-
-    this._userEntity!.sent_count += 1;
   }
 
   addNewEntity(variables: any) {
