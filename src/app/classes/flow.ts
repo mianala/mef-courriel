@@ -147,7 +147,7 @@ export class Flow {
   };
 
   rootId(): number {
-    return this.is.saved() ? this.id : this.root_id;
+    return this.root_id ? this.root_id : this.id;
   }
 
   static CORE_FLOW_FIELDS = gql`
@@ -224,6 +224,7 @@ export class Flow {
 
     fragment ItemFlowFields on flow {
       ...CoreFlowFields
+      root_id
       initiator {
         ...CoreEntityFields
       }

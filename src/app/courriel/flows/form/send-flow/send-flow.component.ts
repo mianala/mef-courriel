@@ -40,8 +40,10 @@ export class SendFlowFormComponent implements OnInit {
     private fb: FormBuilder,
     private entityService: EntityService
   ) {
-    this.parentFlow$.subscribe((data) => {
-      this.parentFlow = new Flow(data);
+    this.parentFlow$.subscribe((flow) => {
+      console.log(flow);
+
+      this.parentFlow = flow;
     });
 
     this.sendFlowForm = this.fb.group({
