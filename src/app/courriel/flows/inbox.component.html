@@ -9,7 +9,14 @@
     [routerLink]="Link.FLOWS_INBOX"
     [queryParams]="{ tab: 'SEARCH' }"
   >
-    <mat-label>Rechercher</mat-label>
+    <mat-label
+      >Rechercher
+      <mat-spinner
+        *ngIf="searching"
+        style="display: inline; margin-right: 1.5rem"
+        diameter="16"
+      ></mat-spinner
+    ></mat-label>
     <input matInput [formControl]="searchCtrl" />
   </mat-form-field>
 </section>

@@ -20,5 +20,9 @@ export class Strings {
       title: 'Assigné',
       tabLabel: 'ASSIGNED',
     },
+    search: {
+      title: 'Rechercher',
+      tabLabel: 'SEARCH',
+    },
   };
 }

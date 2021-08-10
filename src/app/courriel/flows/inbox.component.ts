@@ -5,9 +5,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from '@apollo/client/utilities';
 import { combineLatest, Subject } from 'rxjs';
 import {
+  debounceTime,
   distinctUntilChanged,
   map,
   share,
+  startWith,
   switchMap,
   tap,
 } from 'rxjs/operators';
@@ -23,8 +25,9 @@ import { FlowService } from './flow.service';
   styleUrls: ['./inbox.component.scss'],
 })
 export class FlowsComponent implements OnInit {
+  searching = false;
   today = new Date();
-  searchCtrl: FormControl = new FormControl();
+  searchCtrl: FormControl = new FormControl('');
 
   // TODO: change later when most users won't have access to inbox
   activeTab = 'MAIN';
@@ -71,7 +74,7 @@ export class FlowsComponent implements OnInit {
           flow = this.lectureFlowsWithPagination$;
           break;
         case 'SEARCH':
-          flow = this.appSearchFlows$;
+          flow = this.searchFlows$;
           break;
       }
 
@@ -96,7 +99,11 @@ export class FlowsComponent implements OnInit {
     })
   );
 
-  appSearchFlows$ = this.searchCtrl.valueChanges.pipe(
+  searchFlows$ = this.searchCtrl.valueChanges.pipe(
+    tap(() => {
+      this.searching = true;
+    }),
+    debounceTime(300),
     switchMap((query: string) => {
       const where = { _and: {} };
       where._and = {
@@ -108,11 +115,11 @@ export class FlowsComponent implements OnInit {
           { reference: { _ilike: `%${query}%` } },
         ],
       };
-      console.log(where);
-
       return this.flowService.filterQuery(where);
     }),
-    tap((flows) => console.log(flows))
+    tap(() => {
+      this.searching = false;
+    })
   );
 
   signatureFlowsWithPagination$ = combineLatest([
@@ -190,19 +197,16 @@ export class FlowsComponent implements OnInit {
       icon: 'search',
       id: 0,
       order: 0,
-      unread: this.unreadAssignedxFlows$,
     },
   ];
 
   constructor(
     public flowService: FlowService,
-    private entityService: EntityService,
     private userService: UserService,
     private route: ActivatedRoute,
     private router: Router
   ) {
-    this.queryParams$.subscribe();
-    this.inboxFlowsWithPagination$.subscribe();
+    this.searchCtrl.valueChanges.subscribe((val) => console.log(val));
   }
 
   pageEvent(e: PageEvent) {
@@ -214,7 +218,5 @@ export class FlowsComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.searchCtrl = new FormControl('');
-  }
+  ngOnInit(): void {}
 }
