@@ -74,6 +74,7 @@ export class FlowsComponent implements OnInit {
           flow = this.lectureFlowsWithPagination$;
           break;
         case 'SEARCH':
+          this.searchCtrl.reset();
           flow = this.searchFlows$;
           break;
       }
@@ -102,11 +103,10 @@ export class FlowsComponent implements OnInit {
   searchFlows$ = this.searchCtrl.valueChanges.pipe(
     tap((query) => {
       this.searching = true;
-
-      this.router.navigate([Link.FLOWS_INBOX], {
-        queryParams: { q: query },
-        queryParamsHandling: 'merge',
-      });
+      // this.router.navigate([Link.FLOWS_INBOX], {
+      //   queryParams: { q: query },
+      //   queryParamsHandling: 'merge',
+      // });
     }),
     debounceTime(300),
     switchMap((query: string) => {
@@ -210,7 +210,9 @@ export class FlowsComponent implements OnInit {
     private userService: UserService,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) {
+    this.searchCtrl.valueChanges.subscribe((val) => console.log(val));
+  }
 
   pageEvent(e: PageEvent) {
     console.log(e);
