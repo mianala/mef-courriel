@@ -161,7 +161,10 @@ export class FlowService {
           id: id,
         },
       })
-      .pipe(FlowWithActions.mapFlows);
+      .pipe(
+        FlowWithActions.mapFlows,
+        map((flows: Flow[]) => flows[0])
+      );
   }
 
   // FIXME: optimize

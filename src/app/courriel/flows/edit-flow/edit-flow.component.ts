@@ -29,9 +29,7 @@ export class EditFlowComponent implements OnInit {
   flow$ = this.route.queryParams.pipe(
     switchMap((routeData) => {
       this.flow_id = parseInt(routeData.flow_id);
-      return this.flowService
-        .getFlow(this.flow_id)
-        .pipe(map((flows) => flows[0]));
+      return this.flowService.getFlow(this.flow_id);
     })
   );
 

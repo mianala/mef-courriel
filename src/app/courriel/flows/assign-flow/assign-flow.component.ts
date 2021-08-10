@@ -30,8 +30,7 @@ export class AssignFlowComponent implements OnInit {
   parentFlow$ = this.flowId$.pipe(
     switchMap((id: number) => {
       return this.flowService.getFlow(id);
-    }),
-    map((flows: Flow[]) => flows[0])
+    })
   );
 
   constructor(
