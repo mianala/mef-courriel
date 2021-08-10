@@ -122,7 +122,7 @@ const FlowQueries = {
     }
   `,
 
-  SEARCH_APP_QUERY: gql`
+  SEARCH_QUERY: gql`
     ${Entity.CORE_ENTITY_FIELDS}
     ${Flow.CORE_FLOW_FIELDS}
     query searchFlows($where: flow_bool_exp = {}) {

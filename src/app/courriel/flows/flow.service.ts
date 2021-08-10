@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { Apollo, gql, QueryRef } from 'apollo-angular';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { filter, map, tap } from 'rxjs/operators';
+import { filter, map, switchMap, tap } from 'rxjs/operators';
 import { Flow } from 'src/app/classes/flow';
 import { User } from 'src/app/classes/user';
 import FlowQueries from 'src/app/queries/flow.queries';
@@ -319,20 +319,44 @@ export class FlowService {
 
   // search from received query
   searchQuery(searchFlowVariables: any) {
-    searchFlowVariables.owner_id = {
-      _eq: this.userService._activeUser!.entity_id,
-    };
-    searchFlowVariables.signature = {
-      _eq: true,
-    };
+    return this.userService.activeUserEntityId$.pipe(
+      switchMap((entity_id) => {
+        searchFlowVariables.owner_id = {
+          _eq: entity_id,
+        };
 
-    return this.apollo
-      .watchQuery({
-        query: FlowQueries.SEARCH_APP_QUERY,
-        variables: { where: searchFlowVariables },
-        fetchPolicy: 'cache-and-network',
+        searchFlowVariables.signature = {
+          _eq: true,
+        };
+
+        return this.apollo
+          .watchQuery({
+            query: FlowQueries.SEARCH_QUERY,
+            variables: { where: searchFlowVariables },
+            fetchPolicy: 'cache-and-network',
+          })
+          .valueChanges.pipe(FlowWithActions.mapFlows);
       })
-      .valueChanges.pipe(FlowWithActions.mapFlows);
+    );
+  }
+
+  // search from received query
+  filterQuery(searchFlowVariables: any) {
+    return this.userService.activeUserEntityId$.pipe(
+      switchMap((entity_id) => {
+        searchFlowVariables.owner_id = {
+          _eq: entity_id,
+        };
+
+        return this.apollo
+          .watchQuery({
+            query: FlowQueries.SEARCH_QUERY,
+            variables: { where: searchFlowVariables },
+            fetchPolicy: 'cache-and-network',
+          })
+          .valueChanges.pipe(FlowWithActions.mapFlows);
+      })
+    );
   }
 
   static instance: FlowService;

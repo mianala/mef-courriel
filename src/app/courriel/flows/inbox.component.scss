@@ -60,3 +60,11 @@ section.actions {
     padding: 0.3rem;
   }
 }
+#search-form-field {
+  ::ng-deep {
+    .mat-form-field-wrapper {
+      margin: 0;
+      padding-bottom: 0 !important;
+    }
+  }
+}

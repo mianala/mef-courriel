@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest } from 'rxjs';
@@ -22,6 +23,7 @@ import { FlowService } from './flow.service';
 })
 export class FlowsComponent implements OnInit {
   today = new Date();
+  searchCtrl: FormControl = new FormControl();
 
   // TODO: change later when most users won't have access to inbox
   activeTab = 'MAIN';
@@ -67,6 +69,26 @@ export class FlowsComponent implements OnInit {
           break;
         case Strings.inboxTypes.lecture.tabLabel:
           this.flows$ = this.lectureFlowsWithPagination$;
+          break;
+        case 'SEARCH':
+          this.flows$ = this.searchCtrl.valueChanges.pipe(
+            switchMap((query: string) => {
+              const where = { _and: {} };
+              where._and = {
+                _or: [
+                  { title: { _ilike: `%${query}%` } },
+                  { content: { _ilike: `%${query}%` } },
+                  { labels: { _ilike: `%${query}%` } },
+                  { initiator_text: { _ilike: `%${query}%` } },
+                  { reference: { _ilike: `%${query}%` } },
+                ],
+              };
+              console.log(where);
+
+              return this.flowService.filterQuery(where);
+            }),
+            tap((flows) => console.log(flows))
+          );
           break;
 
         default:
@@ -157,6 +179,14 @@ export class FlowsComponent implements OnInit {
       tab: Strings.inboxTypes.assigned.tabLabel,
       title: Strings.inboxTypes.assigned.title,
       icon: 'work_outline',
+      id: 0,
+      order: 0,
+      unread: this.unreadAssignedxFlows$,
+    },
+    {
+      tab: 'SEARCH',
+      title: 'Rechercher',
+      icon: 'search',
       id: 0,
       order: 0,
       unread: this.unreadAssignedxFlows$,
