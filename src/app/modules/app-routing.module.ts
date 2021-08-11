@@ -42,6 +42,7 @@ import { AssignedFlowsComponent } from '../courriel/flows/assigned-flows/assigne
 import { SignComponent } from '../courriel/flows/sign/sign.component';
 import { EditFlowComponent } from '../courriel/flows/edit-flow/edit-flow.component';
 import { MainGuideComponent } from '../guides/main-guide/main-guide.component';
+import { FeedbackComponent } from '../courriel/feedback/feedback.component';
 
 const routes: Routes = [
   {
@@ -51,6 +52,10 @@ const routes: Routes = [
   {
     path: 'guide',
     component: MainGuideComponent,
+  },
+  {
+    path: 'feedback',
+    component: FeedbackComponent,
   },
   {
     path: 'apps',
