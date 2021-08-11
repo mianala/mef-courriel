@@ -28,7 +28,6 @@
     "graphql": "^15.0.0",
     "ng2-pdf-viewer": "^7.0.1",
     "ngx-doc-viewer": "^2.0.4",
-    "ngx-markdown": "^12.0.1",
     "pdf-lib": "^1.16.0",
     "rxjs": "~6.6.0",
     "signature_pad": "^3.0.0-beta.4",
