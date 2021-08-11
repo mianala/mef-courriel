@@ -10,7 +10,7 @@ export class User {
   email = '';
   phone = 0;
   im = 0;
-  role = 40;
+  role = 4;
   title = '';
   rights = 0;
   entity_id = 0;
