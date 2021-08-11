@@ -287,7 +287,6 @@ export class UserService {
     }
 
     const user = users[0];
-    console.log(user);
 
     // not activated
     if (!user.active) {
