@@ -99,6 +99,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SignComponent } from './courriel/flows/sign/sign.component';
 import { StampComponent } from './components/stamp/stamp.component';
 import { EditFlowComponent } from './courriel/flows/edit-flow/edit-flow.component';
+import { MainGuideComponent } from './guides/main-guide/main-guide.component';
 
 registerLocaleData(localeFr);
 
@@ -212,6 +213,7 @@ registerLocaleData(localeFr);
     SignComponent,
     StampComponent,
     EditFlowComponent,
+    MainGuideComponent,
   ],
   imports: [
     BrowserModule,
