@@ -1,5 +1,7 @@
 export class Link {
   static NOT_FOUND = '/404'; // Link.NOT_FOUND
+  static FEEDBACK = '/feedback'; // Link.NOT_FOUND
+  static GUIDE = '/guide'; // Link.NOT_FOUND
 
   // ADMIN
   static ADMIN_ROOT = '/admin'; // Link.ADMIN_ROOT
