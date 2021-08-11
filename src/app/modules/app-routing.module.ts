@@ -41,11 +41,16 @@ import { InactiveEntitiesComponent } from '../admin/entities/inactive-entities/i
 import { AssignedFlowsComponent } from '../courriel/flows/assigned-flows/assigned-flows.component';
 import { SignComponent } from '../courriel/flows/sign/sign.component';
 import { EditFlowComponent } from '../courriel/flows/edit-flow/edit-flow.component';
+import { MainGuideComponent } from '../guides/main-guide/main-guide.component';
 
 const routes: Routes = [
   {
     path: '',
     component: LandingComponent,
+  },
+  {
+    path: 'guide',
+    component: MainGuideComponent,
   },
   {
     path: 'apps',
