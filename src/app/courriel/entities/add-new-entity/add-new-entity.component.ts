@@ -52,14 +52,14 @@ export class AddNewEntityComponent implements OnInit {
 
     const variables = {
       level: parseInt(form.level),
-      short: parseInt(form.short),
+      short: form.short,
       long: form.long,
       short_header: short_header,
       id_text:
         this.parent_entity.id_text +
         '-' +
         (this.parent_entity.sub_entities_count + 1),
-      parent_entity_id: this.parent_entity_id,
+      parent_id: this.parent_entity.id,
     };
 
     this.entityService.addNewEntity(variables).subscribe((data) => {

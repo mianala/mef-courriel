@@ -11,7 +11,7 @@ const EntityQueries = {
       $short_header: String!
       $id_text: String!
       $level: Int!
-      $parent_entity_id: Int!
+      $parent_id: Int!
     ) {
       insert_entity(
         objects: {
@@ -20,7 +20,7 @@ const EntityQueries = {
           long: $long
           short_header: $short_header
           id_text: $id_text
-          parent_entity_id: $parent_entity_id
+          parent_id: $parent_id
         }
       ) {
         returning {
@@ -29,7 +29,7 @@ const EntityQueries = {
       }
 
       update_entity(
-        where: { id: { _eq: $parent_entity_id } }
+        where: { id: { _eq: $parent_id } }
         _inc: { sub_entities_count: 1 }
       ) {
         returning {
