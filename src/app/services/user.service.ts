@@ -1,3 +1,4 @@
+import { LocalStorageService } from './../service/localstorage.service';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Apollo, gql, QueryRef } from 'apollo-angular';
@@ -162,12 +163,12 @@ export class UserService {
   constructor(
     private apollo: Apollo,
     private notification: NotificationService,
-    private router: Router
+    private router: Router,
+    private localStorageService: LocalStorageService
   ) {
     // FIXME: navigaor.online always true !!! This is just for localhost as, you won't be able to load the page without having internet right?
     if (!window.navigator.onLine) {
       this.notification.notify('Verifiez votre connexion Internet', 5000);
-
       return;
     }
 
@@ -177,12 +178,12 @@ export class UserService {
 
     const localStorageUser =
       localStorage.getItem('user') !== null
-        ? new User(JSON.parse(localStorage.getItem('user') || '[]'))
+        ? this.localStorageService.getUser()
         : null; // redirect to login
 
     if (localStorageUser !== null) {
       console.log('active user from localstorage');
-      this.activeUser$.next(localStorageUser);
+      this.activeUser$.next(localStorageUser!);
     }
 
     this.activeUser$.subscribe((user) => {
@@ -309,7 +310,7 @@ export class UserService {
     this.activeUser$.next(user);
 
     this.updateUserLastLogin();
-    localStorage.setItem('user', JSON.stringify(user));
+    this.localStorageService.setUser(user)
     localStorage.setItem('logged_in', new Date().toString());
 
     if (User.default_apps.includes(user.settings_default_app)) {
