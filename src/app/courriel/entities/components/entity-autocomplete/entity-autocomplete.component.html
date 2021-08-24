@@ -14,8 +14,8 @@
     #auto="matAutocomplete"
     [displayWith]="displayEntity"
   >
-    <mat-option *ngFor="let e of filteredEntities$ | async" [value]="e">
-      {{ e?.short_header }}
+    <mat-option [title]="e.short_header" *ngFor="let e of filteredEntities$ | async" [value]="e">
+      {{ e?.shortenedShortHeader() }}
     </mat-option>
   </mat-autocomplete>
 

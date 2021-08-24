@@ -27,6 +27,13 @@ export class Entity {
     Object.assign(this, _entity);
   }
 
+  shortenedShortHeader(){
+    let shorts = this.short_header.split('/')
+    const length = shorts.length
+    if(length<4) return this.short_header
+    return [shorts[0], '...', shorts[length-2], shorts[length-1]].join('/')
+  }
+
   desactivate() {}
   activate() {}
   delete() {}
