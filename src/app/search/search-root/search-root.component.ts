@@ -1,3 +1,5 @@
+import { Strings } from 'src/app/classes/strings';
+import { Title } from '@angular/platform-browser';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { Component, OnInit } from '@angular/core';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
@@ -27,8 +29,10 @@ export class SearchPageComponent implements OnInit {
     private searchService: SearchService,
     public userService: UserService,
     private route: ActivatedRoute,
-    public router: Router
+    public router: Router,
+    public titleService: Title,
   ) {
+    this.titleService.setTitle(Strings.searchTitle)
     this.entityService.userEntity$
       .pipe(filter((entity) => !!entity))
       .subscribe((entity: Entity | null) => {

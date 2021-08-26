@@ -9,7 +9,10 @@ import { EntityService } from 'src/app/services/entity.service';
 })
 export class EntityComponent implements OnInit {
   @Input() entity: Entity = new Entity();
-  constructor(private entityService: EntityService) {}
+  constructor(
+    private entityService: EntityService,
+    ) {
+    }
 
   remove() {
     const short = prompt(`Entrez '${this.entity.short}' pour valider`);

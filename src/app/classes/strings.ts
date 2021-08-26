@@ -25,4 +25,11 @@ export class Strings {
       tabLabel: 'SEARCH',
     },
   };
+  static entityTitle = "Département";
+  static inboxTitle = "Inbox";
+  static sentboxTitle = "sentBox";
+  static searchTitle = "Rechercher";
+  static appsTitle = "Application";
+  static profilTitle = "Profile";
+  static settingTitle = "Paramètres";
 }

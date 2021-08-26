@@ -87,8 +87,9 @@ export class SearchResultComponent implements OnInit {
     private searchService: SearchService,
     public userService: UserService,
     private entityService: EntityService,
-    private route: ActivatedRoute
-  ) {}
+    private route: ActivatedRoute,
+  ) {
+  }
 
   ngOnInit(): void {}
 

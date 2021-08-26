@@ -15,6 +15,7 @@ export class SignupComponent implements OnInit {
   signUpForm = new FormGroup({});
   entity: Entity = new Entity();
   loading = false;
+  
   constructor(
     private router: Router,
     private titleService: Title,

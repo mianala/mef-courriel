@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
@@ -209,9 +210,11 @@ export class FlowsComponent implements OnInit {
     public flowService: FlowService,
     private userService: UserService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    // private titleService: Title
   ) {
     this.searchCtrl.valueChanges.subscribe((val) => console.log(val));
+    // this.titleService.setTitle(Strings.inboxTitle);
   }
 
   pageEvent(e: PageEvent) {
