@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { Component, OnInit } from '@angular/core';
 import { FlowService } from '../flows/flow.service';
 
@@ -9,7 +10,12 @@ import { FlowService } from '../flows/flow.service';
 export class SentFlowsComponent implements OnInit {
   sentFlows$ = this.flowService.sentFlows$;
 
-  constructor(private flowService: FlowService) {}
+  constructor(
+    private flowService: FlowService,
+    private titleService: Title,
+    ) {
+      this.titleService.setTitle('Sentbox')
+    }
 
   ngOnInit(): void {}
 }

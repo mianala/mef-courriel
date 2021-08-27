@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ChatComponent } from '../chat/chat.component';
@@ -210,6 +211,9 @@ const routes: Routes = [
           {
             path: 'inbox',
             component: FlowsComponent,
+            data:{
+              title: "Inbox"
+            }
           },
           {
             path: 'assigned',

@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Entity } from 'src/app/classes/entity';
@@ -6,6 +7,7 @@ import { UserService } from '../../../services/user.service';
 import { EntityService } from 'src/app/services/entity.service';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { Strings } from 'src/app/classes/strings';
 
 @Component({
   selector: 'app-entity-page',
@@ -38,9 +40,11 @@ export class EntityPageComponent implements OnInit {
   constructor(
     private entityService: EntityService,
     private userService: UserService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private titleService : Title
   ) {
     this.params$.subscribe();
+    this.titleService.setTitle(Strings.entityTitle)
   }
 
   ngOnInit(): void {}

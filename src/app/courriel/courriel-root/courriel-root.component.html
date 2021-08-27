@@ -1,7 +1,7 @@
 <nav>
   <section>
     <a class="nav-link" [routerLink]="Link.APPS_ROOT" routerLinkActive="active">
-      <div title="Applications" matTooltipPosition="right">
+      <div matTooltip="Applications" matTooltipPosition="right">
         <mat-icon>apps</mat-icon>
       </div>
     </a>
@@ -32,7 +32,7 @@
 
     <!-- entity page -->
     <a class="nav-link" [routerLink]="Link.ENTITY" routerLinkActive="active">
-      <div>
+      <div matTooltip="Département" matTooltipPosition="right" >
         <mat-icon>domain</mat-icon>
       </div>
     </a>
@@ -42,7 +42,7 @@
       [routerLink]="Link.SEARCH_APP"
       routerLinkActive="active"
     >
-      <div title="Rechercher" matTooltipPosition="right">
+      <div matTooltip="Rechercher" matTooltipPosition="right">
         <mat-icon>search</mat-icon>
       </div>
     </a>
@@ -69,17 +69,17 @@
         <mat-icon>chat_bubble_outline</mat-icon>
       </div> </a -->
     <a class="nav-link" [routerLink]="Link.USER" routerLinkActive="active">
-      <div>
+      <div matTooltip="Profil" matTooltipPosition="right">
         <mat-icon>account_circle_outline</mat-icon>
       </div>
     </a>
     <a class="nav-link" [routerLink]="Link.SETTINGS" routerLinkActive="active">
-      <div>
+      <div matTooltip="Paramètres" matTooltipPosition="right">
         <mat-icon>settings_outlined</mat-icon>
       </div>
     </a>
     <a class="nav-link" title="Se deconnecter" (click)="userService.logout()">
-      <div>
+      <div matTooltip="Se déconnecter" matTooltipPosition="right">
         <mat-icon>logout</mat-icon>
       </div>
     </a>
