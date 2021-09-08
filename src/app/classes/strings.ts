@@ -32,4 +32,5 @@ export class Strings {
   static appsTitle = "Application";
   static profilTitle = "Profile";
   static settingTitle = "Paramètres";
+  static landingTitle = "MEF";
 }
