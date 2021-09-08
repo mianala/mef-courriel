@@ -211,10 +211,10 @@ export class FlowsComponent implements OnInit {
     private userService: UserService,
     private route: ActivatedRoute,
     private router: Router,
-    // private titleService: Title
+    private titleService: Title
   ) {
     this.searchCtrl.valueChanges.subscribe((val) => console.log(val));
-    // this.titleService.setTitle(Strings.inboxTitle);
+    this.titleService.setTitle(Strings.inboxTitle);
   }
 
   pageEvent(e: PageEvent) {

@@ -2,6 +2,7 @@ import { Title } from '@angular/platform-browser';
 import { Component, OnInit } from '@angular/core';
 import { Link } from 'src/app/classes/link';
 import { UserService } from '../../services/user.service';
+import { Strings } from 'src/app/classes/strings';
 
 @Component({
   selector: 'app-landing',
@@ -14,7 +15,7 @@ export class LandingComponent implements OnInit {
     public userService: UserService,
     private titleService: Title
     ) {
-      this.titleService.setTitle('Mef-courriel')
+      this.titleService.setTitle(Strings.landingTitle)
     }
 
   ngOnInit(): void {}
